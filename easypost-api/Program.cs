@@ -1,4 +1,6 @@
+using easypost_api.Shared.Domain.Repositories;
 using easypost_api.Shared.Infrastructure.Persistence.EFC.Configuration;
+using easypost_api.Shared.Infrastructure.Persistence.EFC.Repositories;
 using easypost_api.Shared.Interfaces.ASP.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -54,6 +56,7 @@ builder.Services.AddRouting(options=>options.LowercaseUrls=true);
 // Configure Dependency Injection
 
 // Shared Bounded Context Injection Configuration
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 // Bounded Context "1" Injection Configuration
 
