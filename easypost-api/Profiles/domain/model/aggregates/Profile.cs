@@ -1,3 +1,4 @@
+using easypost_api.Profiles.domain.model.commands;
 using easypost_api.Profiles.domain.model.valueObjects;
 
 namespace easypost_api.Profiles.domain.model.aggregates;
@@ -26,6 +27,12 @@ public partial class Profile
     }
     
     //constructor con command
+    public Profile(CreateProfileCommand command)
+    {
+        Detail = new Details(command.name,command.description,command.ruc);
+        Contact = new Contact(command.telefono,command.correo);
+        Address = new Address(command.departamento,command.distrito,command.residencial);
+    }
     
     //metodos 
 }

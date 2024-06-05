@@ -24,15 +24,11 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Profiles\Application\internal\commandServices\" />
-      <Folder Include="Profiles\Application\internal\queryServices\" />
-      <Folder Include="Profiles\domain\model\commands\" />
+      <Folder Include="Profiles\Application\Internal\QueryServices\" />
       <Folder Include="Profiles\domain\model\queries\" />
-      <Folder Include="Profiles\domain\services\" />
-      <Folder Include="Profiles\infrastructure\persistence\jpa\repositories\" />
       <Folder Include="Profiles\interfaces\ACL\" />
-      <Folder Include="Profiles\interfaces\REST\resources\" />
-      <Folder Include="Profiles\interfaces\REST\transform\" />
+      <Folder Include="Profiles\interfaces\REST\Resources\" />
+      <Folder Include="Profiles\interfaces\REST\Transform\" />
     </ItemGroup>
 
 </Project>
