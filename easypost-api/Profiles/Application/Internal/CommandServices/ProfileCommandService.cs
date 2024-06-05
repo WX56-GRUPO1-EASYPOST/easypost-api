@@ -2,19 +2,26 @@ using easypost_api.Profiles.domain.model.aggregates;
 using easypost_api.Profiles.domain.model.commands;
 using easypost_api.Profiles.domain.Repositories;
 using easypost_api.Profiles.domain.Services;
-using easypost_api.Shared.Domain.Repositories;
 
 namespace easypost_api.Profiles.Application.Internal.CommandServices;
 
-public class ProfileCommandService(IProfileRepository profileRepository, IUnitOfWork unitOfWork):IProfileCommandService
+public class ProfileCommandService: IProfileCommandService
 {
+    private readonly IProfileRepository _profileRepository;
+    private readonly IUnitOfWork _unitOfWork;
+
+    public ProfileCommandService(IProfileRepository profileRepository, IUnitOfWork unitOfWork)
+    {
+        _profileRepository = profileRepository;
+        _unitOfWork = unitOfWork;
+    }
     public async Task<Profile?> Handle(CreateProfileCommand command)
     {
         var profile = new Profile(command);
         try
         {
-            await profileRepository.AddAsync(profile);
-            await unitOfWork.CompleteAsync();
+            await _profileRepository.AddAsync(profile);
+            await _unitOfWork.CompleteAsync();
             return profile;
         } catch (Exception e)
         {
