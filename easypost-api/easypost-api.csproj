@@ -38,7 +38,6 @@
       <Folder Include="IAM\Interfaces\REST\Resources\" />
       <Folder Include="IAM\Interfaces\REST\Transform\" />
       <Folder Include="Profiles\Application\Internal\QueryServices\" />
-      <Folder Include="Profiles\Domain\Model\Queries\" />
       <Folder Include="Profiles\Interfaces\ACL\" />
       <Folder Include="Profiles\Interfaces\REST\Resources\" />
     </ItemGroup>

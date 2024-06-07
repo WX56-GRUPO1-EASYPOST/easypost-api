@@ -18,4 +18,8 @@ public class ProfileQueryService : IProfileQueryService
       
     }
 
+    public async Task<IEnumerable<Profile>> Handle(GetAllProfilesQuery query)
+    {
+        return await _profileRepository.ListAsync();
+    }
 }
