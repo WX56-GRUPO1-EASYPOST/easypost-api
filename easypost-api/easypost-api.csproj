@@ -25,10 +25,10 @@
 
     <ItemGroup>
       <Folder Include="Profiles\Application\Internal\QueryServices\" />
-      <Folder Include="Profiles\domain\model\queries\" />
-      <Folder Include="Profiles\interfaces\ACL\" />
-      <Folder Include="Profiles\interfaces\REST\Resources\" />
-      <Folder Include="Profiles\interfaces\REST\Transform\" />
+      <Folder Include="Profiles\Domain\Model\Queries\" />
+      <Folder Include="Profiles\Interfaces\ACL\" />
+      <Folder Include="Profiles\Interfaces\REST\Resources\" />
+      <Folder Include="Profiles\Interfaces\REST\Transform\" />
     </ItemGroup>
 
 </Project>

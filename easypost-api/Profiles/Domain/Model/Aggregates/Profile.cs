@@ -1,8 +1,7 @@
-
-using easypost_api.Profiles.domain.model.commands;
+using easypost_api.Profiles.Domain.Model.Commands;
 using easypost_api.Profiles.domain.model.valueObjects;
 
-namespace easypost_api.Profiles.domain.model.aggregates;
+namespace easypost_api.Profiles.Domain.Model.Aggregates;
 
 public partial class Profile
 {

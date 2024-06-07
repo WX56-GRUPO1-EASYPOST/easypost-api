@@ -1,7 +1,8 @@
-using easypost_api.Profiles.domain.model.aggregates;
-using easypost_api.Profiles.domain.model.commands;
-using easypost_api.Profiles.domain.Repositories;
-using easypost_api.Profiles.domain.Services;
+using easypost_api.Profiles.Domain.Model.Aggregates;
+using easypost_api.Profiles.Domain.Model.Commands;
+using easypost_api.Profiles.Domain.Repositories;
+using easypost_api.Profiles.Domain.Services;
+using easypost_api.Shared.Domain.Repositories;
 
 namespace easypost_api.Profiles.Application.Internal.CommandServices;
 

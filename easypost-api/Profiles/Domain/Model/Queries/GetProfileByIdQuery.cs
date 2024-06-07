@@ -1,3 +1,3 @@
-namespace easypost_api.Profiles.domain.model.queries;
+namespace easypost_api.Profiles.Domain.Model.Queries;
 
 public record GetProfileByIdQuery(int ProfileId);

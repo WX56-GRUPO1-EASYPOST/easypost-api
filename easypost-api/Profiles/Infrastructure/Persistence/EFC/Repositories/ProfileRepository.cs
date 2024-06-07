@@ -1,6 +1,5 @@
-using easypost_api.Profiles.domain.model.aggregates;
-
-using easypost_api.Profiles.domain.Repositories;
+using easypost_api.Profiles.Domain.Model.Aggregates;
+using easypost_api.Profiles.Domain.Repositories;
 using easypost_api.Shared.Infrastructure.Persistence.EFC.Configuration;
 using easypost_api.Shared.Infrastructure.Persistence.EFC.Repositories;
 
