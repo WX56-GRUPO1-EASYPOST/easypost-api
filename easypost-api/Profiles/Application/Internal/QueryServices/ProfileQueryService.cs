@@ -1,5 +1,5 @@
 using easypost_api.Profiles.Domain.Model.Aggregates;
-using easypost_api.Profiles.domain.model.queries;
+using easypost_api.Profiles.Domain.Model.Queries;
 using easypost_api.Profiles.Domain.Repositories;
 using easypost_api.Profiles.Domain.Services;
 
