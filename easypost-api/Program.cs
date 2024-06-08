@@ -1,3 +1,15 @@
+using easypost_api.IAM.Application.Internal.CommandServices;
+using easypost_api.IAM.Application.Internal.QueryServices;
+using easypost_api.IAM.Domain.Repositories;
+using easypost_api.IAM.Domain.Services;
+using easypost_api.IAM.Infrastructurre.Persistence.EFC.Repositories;
+using easypost_api.Profiles.Application.Internal.CommandServices;
+using easypost_api.Profiles.Application.Internal.QueryServices;
+using easypost_api.Profiles.Domain.Repositories;
+using easypost_api.Profiles.Domain.Services;
+using easypost_api.Profiles.Infrastructure.Persistence.EFC.Repositories;
+using easypost_api.Profiles.Interfaces.ACL;
+using easypost_api.Profiles.Interfaces.ACL.Services;
 using easypost_api.Shared.Domain.Repositories;
 using easypost_api.Shared.Infrastructure.Persistence.EFC.Configuration;
 using easypost_api.Shared.Infrastructure.Persistence.EFC.Repositories;
@@ -58,9 +70,19 @@ builder.Services.AddRouting(options=>options.LowercaseUrls=true);
 // Shared Bounded Context Injection Configuration
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-// Bounded Context "1" Injection Configuration
+// Bounded Context "Profiles" Injection Configuration
 
-// Bounded Context "2" Injection Configuration
+builder.Services.AddScoped<IProfileRepository,ProfileRepository>();
+builder.Services.AddScoped<IProfileCommandService,ProfileCommandService>();
+builder.Services.AddScoped<IProfileQueryService,ProfileQueryService>();
+builder.Services.AddScoped<IProfilesContextFacade,ProfilesContextFacade>();
+
+// Bounded Context "Users" Injection Configuration
+
+builder.Services.AddScoped<IUserRepository,UserRepository>();
+builder.Services.AddScoped<IUserCommandService,UserCommandService>();
+builder.Services.AddScoped<IUserQueryService,UserQueryService>();
+
 
 // ....
 
