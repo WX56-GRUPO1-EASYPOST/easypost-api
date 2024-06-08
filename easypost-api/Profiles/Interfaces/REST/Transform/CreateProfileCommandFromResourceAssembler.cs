@@ -9,6 +9,6 @@ public class CreateProfileCommandFromResourceAssembler
     {
         return new CreateProfileCommand(resource.Name,resource.Description,resource.Ruc,
             resource.Telefono,resource.Correo,resource.Departamento,resource.Distrito,
-            resource.Residencial);
+            resource.Residencial,resource.UserId);
     }
 }

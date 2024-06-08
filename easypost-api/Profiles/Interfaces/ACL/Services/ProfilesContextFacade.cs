@@ -14,10 +14,19 @@ public class ProfilesContextFacade : IProfilesContextFacade
         _profileQueryService = profileQueryService;
     }
     
-    public async Task<int> CreateProfile(string name, string description, string ruc, string telefono, string correo, string departamento, string distrito, string residencial)
+    //public async Task<int> CreateProfile(string name, string description, string ruc, string telefono, string correo, string departamento, string distrito, string residencial)
+    //{
+    //    var command = new CreateProfileCommand(name, description, ruc, telefono, correo, departamento, distrito, residencial);
+    //    var profile = await _profileCommandService.Handle(command);
+    //    return profile?.Id ?? 0; // Aquí puedes retornar el ID del perfil creado o cualquier otro valor que necesites
+    //}
+
+    public async Task<int> CreateProfileForUser(string name, string description, string ruc, string telefono,
+        string correo, string departamento, string distrito, string residencial, int userId)
     {
-        var command = new CreateProfileCommand(name, description, ruc, telefono, correo, departamento, distrito, residencial);
+        var command = new CreateProfileCommand(name, description, ruc, telefono, correo, departamento, distrito, residencial, userId);
         var profile = await _profileCommandService.Handle(command);
-        return profile?.Id ?? 0; // Aquí puedes retornar el ID del perfil creado o cualquier otro valor que necesites
+        return profile?.Id ?? 0;
     }
+
 }

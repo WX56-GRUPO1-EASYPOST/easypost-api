@@ -7,6 +7,7 @@ public partial class Profile
 {
 
     public int Id { get; }
+    public int UserId { get; private set;}
     public Details Detail { get; private set; }
     public Contact Contact { get; private set; }
     public Address Address { get; private set; }
@@ -20,14 +21,16 @@ public partial class Profile
         Detail = new Details();
         Contact = new Contact();
         Address = new Address();
+        UserId=0;
     }
 
     public Profile(string name, string description, string ruc, string telefono, string correo, string departamento,
-        string distrito, string residencial)
+        string distrito, string residencial, int userId)
     {
         Detail = new Details(name,description,ruc);
         Contact = new Contact(telefono,correo);
         Address = new Address(departamento,distrito,residencial);
+        UserId= userId;
     }
     
     //constructor con command
@@ -36,6 +39,7 @@ public partial class Profile
         Detail = new Details(command.Name,command.Description,command.Ruc);
         Contact = new Contact(command.Telefono,command.Correo);
         Address = new Address(command.Departamento,command.Distrito,command.Residencial);
+        UserId = command.UserId;
     }
 
     //metodos 
