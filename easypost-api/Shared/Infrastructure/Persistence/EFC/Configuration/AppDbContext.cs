@@ -1,3 +1,4 @@
+using easypost_api.IAM.Domain.Model.Aggregates;
 using easypost_api.Profiles.Domain.Model.Aggregates;
 using easypost_api.Shared.Infrastructure.Persistence.EFC.Configuration.Extensions;
 using EntityFrameworkCore.CreatedUpdatedDate.Extensions;
@@ -53,7 +54,14 @@ public class AppDbContext : DbContext
                 a.Property(p => p.Residential).HasColumnName("Residential");
             });
         
-        // 
+        // IAM Context
+
+        builder.Entity<User>().HasKey(u => u.Id);
+        builder.Entity<User>().Property(u => u.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<User>().Property(u => u.Username).IsRequired();
+        builder.Entity<User>().Property(u => u.Password).IsRequired();
+        builder.Entity<User>().Property(u => u.Type).IsRequired();
+        
         builder.UseSnakeCaseWithPluralizedTableNamingConvention();
     }
 }

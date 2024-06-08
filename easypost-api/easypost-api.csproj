@@ -25,18 +25,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="IAM\Application\Internal\CommandServices\" />
-      <Folder Include="IAM\Application\Internal\QueryServices\" />
-      <Folder Include="IAM\Domain\Model\Aggregates\" />
-      <Folder Include="IAM\Domain\Model\Commands\" />
-      <Folder Include="IAM\Domain\Model\Queries\" />
-      <Folder Include="IAM\Domain\Model\ValueObjects\" />
-      <Folder Include="IAM\Domain\Repositories\" />
-      <Folder Include="IAM\Domain\Services\" />
-      <Folder Include="IAM\Infrastructurre\Persistence\EFC\Repositories\" />
       <Folder Include="IAM\Interfaces\ACL\Services\" />
-      <Folder Include="IAM\Interfaces\REST\Resources\" />
-      <Folder Include="IAM\Interfaces\REST\Transform\" />
       <Folder Include="Profiles\Application\Internal\QueryServices\" />
       <Folder Include="Profiles\Interfaces\ACL\" />
       <Folder Include="Profiles\Interfaces\REST\Resources\" />
