@@ -6,5 +6,5 @@ namespace easypost_api.Profiles.Domain.Repositories;
 
 public interface IProfileRepository : IBaseRepository<Profile>
 {
-    
+    bool ExistsById(int profileId);
 }

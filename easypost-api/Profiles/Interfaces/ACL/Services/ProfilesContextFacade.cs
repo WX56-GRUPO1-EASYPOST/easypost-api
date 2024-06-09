@@ -1,4 +1,5 @@
 using easypost_api.Profiles.Domain.Model.Commands;
+using easypost_api.Profiles.Domain.Model.Queries;
 using easypost_api.Profiles.Domain.Services;
 
 namespace easypost_api.Profiles.Interfaces.ACL.Services;
@@ -29,4 +30,9 @@ public class ProfilesContextFacade : IProfilesContextFacade
         return profile?.Id ?? 0;
     }
 
+    public bool ExistsProfileById(int profileId)
+    {
+        var query = new ExistProfileByIdQuery(profileId);
+        return _profileQueryService.Handle(query);
+    }
 }

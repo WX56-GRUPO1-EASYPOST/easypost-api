@@ -22,4 +22,9 @@ public class ProfileQueryService : IProfileQueryService
     {
         return await _profileRepository.ListAsync();
     }
+
+    public bool Handle(ExistProfileByIdQuery query)
+    {
+        return _profileRepository.ExistsById(query.ProfileId);
+    }
 }
