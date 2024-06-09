@@ -19,4 +19,9 @@ public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where T
     public void Remove(TEntity entity) => Context.Set<TEntity>().Remove(entity);
 
     public async Task<IEnumerable<TEntity>> ListAsync() => await Context.Set<TEntity>().ToListAsync();
+
+    public async Task<IEnumerable<TEntity>> ListAsyncByStatus(int status) =>
+        await Context.Set<TEntity>()
+            .Where(e=>EF.Property<int>(e,"Status")==status)
+            .ToListAsync();
 }

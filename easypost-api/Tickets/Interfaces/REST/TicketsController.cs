@@ -34,4 +34,23 @@ public class TicketsController(ITicketCommandService ticketCommandService,
         var ticketResource = TicketResourceFromEntityAssembler.ToResourceFromEntity(ticket);
         return Ok(ticketResource);
     }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAllTickets()
+    {
+        var getAllTickets = new GetAllTicketsQuery();
+        var tickets = await ticketQueryService.Handle(getAllTickets);
+        var resources = tickets.Select(TicketResourceFromEntityAssembler.ToResourceFromEntity);
+        return Ok(resources);
+    }
+
+    [HttpGet("filter")]
+    public async Task<IActionResult> GetAllTicketsByStatus([FromQuery] int status)
+    {
+        var getTicketsByStatusQuery = new GetAllTicketsByStatus(status);
+        var tickets = await ticketQueryService.Handle(getTicketsByStatusQuery);
+        var resources = tickets.Select(TicketResourceFromEntityAssembler.ToResourceFromEntity);
+        return Ok(resources);
+    }
+    
 }

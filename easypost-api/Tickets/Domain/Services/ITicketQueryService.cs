@@ -6,4 +6,6 @@ namespace easypost_api.Tickets.Domain.Services;
 public interface ITicketQueryService
 {
     Task<Ticket?> Handle(GetTicketByIdQuery query);
+    Task<IEnumerable<Ticket>> Handle(GetAllTicketsQuery query);
+    Task<IEnumerable<Ticket>> Handle(GetAllTicketsByStatus query);
 }

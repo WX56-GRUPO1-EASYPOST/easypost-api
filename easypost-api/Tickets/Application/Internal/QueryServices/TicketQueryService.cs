@@ -21,4 +21,14 @@ public class TicketQueryService : ITicketQueryService
     {
         return await _ticketRepository.FindByIdAsync(query.Id);
     }
+
+    public async Task<IEnumerable<Ticket>> Handle(GetAllTicketsQuery query)
+    {
+        return await _ticketRepository.ListAsync();
+    }
+
+    public async Task<IEnumerable<Ticket>> Handle(GetAllTicketsByStatus query)
+    {
+        return await _ticketRepository.ListAsyncByStatus(query.Status);
+    }
 }
