@@ -29,6 +29,7 @@
       <Folder Include="Profiles\Application\Internal\QueryServices\" />
       <Folder Include="Profiles\Interfaces\ACL\" />
       <Folder Include="Profiles\Interfaces\REST\Resources\" />
+      <Folder Include="Tickets\Interfaces\ACL\Services\" />
     </ItemGroup>
 
 </Project>

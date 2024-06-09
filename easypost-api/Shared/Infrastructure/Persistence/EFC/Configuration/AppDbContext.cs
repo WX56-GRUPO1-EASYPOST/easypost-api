@@ -1,6 +1,7 @@
 using easypost_api.IAM.Domain.Model.Aggregates;
 using easypost_api.Profiles.Domain.Model.Aggregates;
 using easypost_api.Shared.Infrastructure.Persistence.EFC.Configuration.Extensions;
+using easypost_api.Tickets.Domain.Model.Aggregates;
 using EntityFrameworkCore.CreatedUpdatedDate.Extensions;
 using Microsoft.EntityFrameworkCore;
 
@@ -61,6 +62,14 @@ public class AppDbContext : DbContext
         builder.Entity<User>().Property(u => u.Username).IsRequired();
         builder.Entity<User>().Property(u => u.Password).IsRequired();
         builder.Entity<User>().Property(u => u.Type).IsRequired();
+        
+        // Tickets Context
+        builder.Entity<Ticket>().HasKey(t => t.Id);
+        builder.Entity<Ticket>().Property(t => t.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<Ticket>().Property(t => t.Title).IsRequired();
+        builder.Entity<Ticket>().Property(t => t.Description).IsRequired();
+        builder.Entity<Ticket>().Property(t => t.Category).IsRequired();
+        builder.Entity<Ticket>().Property(t => t.Priority).IsRequired();
         
         builder.UseSnakeCaseWithPluralizedTableNamingConvention();
     }
