@@ -19,6 +19,11 @@ using easypost_api.Tickets.Application.Internal.QueryServices;
 using easypost_api.Tickets.Domain.Repositories;
 using easypost_api.Tickets.Domain.Services;
 using easypost_api.Tickets.Infrastructurre.Persistence.EFC.Repositories;
+using easypost_api.Requests.Application.Internal.CommandServices;
+using easypost_api.Requests.Application.Internal.QueryServices;
+using easypost_api.Requests.Domain.Repositories;
+using easypost_api.Requests.Domain.Services;
+using easypost_api.Requests.Infrastructure.Persistence.EFC.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -88,12 +93,18 @@ builder.Services.AddScoped<IUserRepository,UserRepository>();
 builder.Services.AddScoped<IUserCommandService,UserCommandService>();
 builder.Services.AddScoped<IUserQueryService,UserQueryService>();
 
+// Bounded Context "Requests" Injection Configuration
+builder.Services.AddScoped<IRequestRepository, RequestRepository>();
+builder.Services.AddScoped<IRequestCommandService, RequestCommandService>();
+builder.Services.AddScoped<IRequestQueryService, RequestQueryService>();
+
 // Bounded Context "Tickets" Injection Configuration
 builder.Services.AddScoped<ITicketRepository,TicketRepository>();
 builder.Services.AddScoped<ITicketCommandService,TicketCommandService>();
 builder.Services.AddScoped<ITicketQueryService,TicketQueryService>();
 
 // ....
+
 
 var app = builder.Build();
 
