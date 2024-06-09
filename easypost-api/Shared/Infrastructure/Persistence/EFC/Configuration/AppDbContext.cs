@@ -1,5 +1,7 @@
 using easypost_api.IAM.Domain.Model.Aggregates;
 using easypost_api.Profiles.Domain.Model.Aggregates;
+using easypost_api.Requests.Domain.Model.Aggregates;
+using easypost_api.Requests.Domain.Model.ValueObjects;
 using easypost_api.Shared.Infrastructure.Persistence.EFC.Configuration.Extensions;
 using EntityFrameworkCore.CreatedUpdatedDate.Extensions;
 using Microsoft.EntityFrameworkCore;
@@ -61,6 +63,21 @@ public class AppDbContext : DbContext
         builder.Entity<User>().Property(u => u.Username).IsRequired();
         builder.Entity<User>().Property(u => u.Password).IsRequired();
         builder.Entity<User>().Property(u => u.Type).IsRequired();
+        
+        // Requests Context
+        builder.Entity<Request>().HasKey(r => r.Id);
+        builder.Entity<Request>().Property(r => r.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<Request>().Property(r => r.ProjectId).IsRequired();
+        builder.Entity<Request>().Property(r => r.Description).IsRequired();
+        builder.Entity<Request>().Property(r => r.Status).IsRequired();
+        builder.Entity<Request>().Property(r => r.Date).IsRequired();
+        
+        // Convertir RequestDescription a un tipo compatible con la base de datos
+        builder.Entity<Request>()
+            .Property(r => r.Description)
+            .HasConversion(
+                v => v.Description, // Convertir a string al guardar en la base de datos
+                v => new RequestDescription(v)); // Convertir a RequestDescription al leer de la base de datos
         
         builder.UseSnakeCaseWithPluralizedTableNamingConvention();
     }

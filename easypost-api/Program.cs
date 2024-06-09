@@ -10,6 +10,11 @@ using easypost_api.Profiles.Domain.Services;
 using easypost_api.Profiles.Infrastructure.Persistence.EFC.Repositories;
 using easypost_api.Profiles.Interfaces.ACL;
 using easypost_api.Profiles.Interfaces.ACL.Services;
+using easypost_api.Requests.Application.Internal.CommandServices;
+using easypost_api.Requests.Application.Internal.QueryServices;
+using easypost_api.Requests.Domain.Repositories;
+using easypost_api.Requests.Domain.Services;
+using easypost_api.Requests.Infrastructure.Persistence.EFC.Repositories;
 using easypost_api.Shared.Domain.Repositories;
 using easypost_api.Shared.Infrastructure.Persistence.EFC.Configuration;
 using easypost_api.Shared.Infrastructure.Persistence.EFC.Repositories;
@@ -83,7 +88,10 @@ builder.Services.AddScoped<IUserRepository,UserRepository>();
 builder.Services.AddScoped<IUserCommandService,UserCommandService>();
 builder.Services.AddScoped<IUserQueryService,UserQueryService>();
 
-
+// Bounded Context "Requests" Injection Configuration
+builder.Services.AddScoped<IRequestRepository, RequestRepository>();
+builder.Services.AddScoped<IRequestCommandService, RequestCommandService>();
+builder.Services.AddScoped<IRequestQueryService, RequestQueryService>();
 // ....
 
 var app = builder.Build();
