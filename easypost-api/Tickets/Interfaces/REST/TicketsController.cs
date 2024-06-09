@@ -1,4 +1,5 @@
 using System.Net.Mime;
+using easypost_api.Profiles.Interfaces.ACL;
 using easypost_api.Tickets.Domain.Model.Queries;
 using easypost_api.Tickets.Domain.Services;
 using easypost_api.Tickets.Interfaces.REST.Resources;
@@ -11,11 +12,12 @@ namespace easypost_api.Tickets.Interfaces.REST;
 [Route("api/v1/[controller]")]
 [Produces(MediaTypeNames.Application.Json)]
 public class TicketsController(ITicketCommandService ticketCommandService,
-    ITicketQueryService ticketQueryService) : ControllerBase
+    ITicketQueryService ticketQueryService, IProfilesContextFacade profilesContextFacade) : ControllerBase
 {
     [HttpPost]
     public async Task<IActionResult> CreateTicket([FromBody] CreateTicketResource resource)
     {
+        if (!profilesContextFacade.ExistsProfileById(resource.ProfileId)) return BadRequest();
         var createTicketCommand = CreateTicketCommandFromResourceAssembler.ToCommandFromResource(resource);
         var ticket = await ticketCommandService.Handle(createTicketCommand);
         if (ticket == null) return  BadRequest();

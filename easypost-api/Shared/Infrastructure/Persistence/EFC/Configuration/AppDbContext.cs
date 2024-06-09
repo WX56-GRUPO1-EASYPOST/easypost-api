@@ -70,6 +70,7 @@ public class AppDbContext : DbContext
         builder.Entity<Ticket>().Property(t => t.Description).IsRequired();
         builder.Entity<Ticket>().Property(t => t.Category).IsRequired();
         builder.Entity<Ticket>().Property(t => t.Priority).IsRequired();
+        builder.Entity<Ticket>().Property(t => t.ProfileId).IsRequired();
         
         builder.UseSnakeCaseWithPluralizedTableNamingConvention();
     }

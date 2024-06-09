@@ -13,4 +13,9 @@ public class ProfileRepository: BaseRepository<Profile>, IProfileRepository
     {
         _context = context;
     }
+
+    public bool ExistsById(int profileId)
+    {
+        return _context.Set<Profile>().Any(profile => profile.Id.Equals(profileId));
+    }
 }

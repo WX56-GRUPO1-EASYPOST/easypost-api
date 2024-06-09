@@ -8,6 +8,6 @@ public class CreateTicketCommandFromResourceAssembler
     public static CreateTicketCommand ToCommandFromResource(CreateTicketResource resource)
     {
         return new CreateTicketCommand(resource.Title,resource.Description,resource.Category,
-            resource.Priority);
+            resource.Priority,resource.ProfileId);
     }
 }

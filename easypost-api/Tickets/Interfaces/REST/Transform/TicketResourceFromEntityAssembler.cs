@@ -8,6 +8,7 @@ public class TicketResourceFromEntityAssembler
     public static TicketResource ToResourceFromEntity(Ticket entity)
     {
         return new TicketResource(entity.Title,entity.Description,entity.Category.ToString(),
-            entity.Priority.ToString(),entity.Status.ToString(),entity.CreatedAt.ToString("G"));
+            entity.Priority.ToString(),entity.ProfileId,entity.Status.ToString(),
+            entity.CreatedAt.ToString("G"));
     }
 }

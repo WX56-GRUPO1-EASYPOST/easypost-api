@@ -10,9 +10,10 @@ public class Ticket
     public string Description { get; }
     public ECategory Category { get; private set; }
     public EPriority Priority { get; private set; }
+    public int ProfileId { get; private set; }
     public EStatus Status { get; private set; }
-    public DateTimeOffset CreatedAt { get; private set; }
-    public DateTimeOffset? LastUpdate { get; private set; }
+    public DateTime CreatedAt { get; private set; }
+    public DateTime? LastUpdate { get; private set; }
 
     public Ticket(CreateTicketCommand command)
     {
@@ -20,8 +21,9 @@ public class Ticket
         this.Description = command.Description;
         this.Category = command.Category;
         this.Priority = command.Priority;
+        this.ProfileId = command.ProfileId;
         this.Status = EStatus.InProgress;
-        this.CreatedAt=DateTimeOffset.UtcNow;
+        this.CreatedAt=DateTime.Now;
         this.LastUpdate = null;
     }
     
@@ -37,6 +39,6 @@ public class Ticket
 
     public void UpdateTicket()
     {
-        this.LastUpdate = DateTimeOffset.UtcNow;
+        this.LastUpdate = DateTime.Now;
     }
 }
