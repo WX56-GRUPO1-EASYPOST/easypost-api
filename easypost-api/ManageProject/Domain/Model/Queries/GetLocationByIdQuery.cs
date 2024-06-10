@@ -1,3 +1,3 @@
 namespace easypost_api.ManageProject.Domain.Model.Queries;
 
-public record GetAllPermitsByProjectIdQuery;
+public record GetLocationByIdQuery;

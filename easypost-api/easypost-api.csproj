@@ -25,7 +25,6 @@
 
     <ItemGroup>
       <Folder Include="ManageProject\Application\" />
-      <Folder Include="ManageProject\Domain\Services\" />
       <Folder Include="ManageProject\Infrastructure\" />
       <Folder Include="ManageProject\Interfaces\" />
     </ItemGroup>
