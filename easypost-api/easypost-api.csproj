@@ -26,7 +26,6 @@
     <ItemGroup>
       <Folder Include="ManageProject\Application\" />
       <Folder Include="ManageProject\Domain\Model\Commands\" />
-      <Folder Include="ManageProject\Domain\Model\Queries\" />
       <Folder Include="ManageProject\Domain\Repositories\" />
       <Folder Include="ManageProject\Domain\Services\" />
       <Folder Include="ManageProject\Infrastructure\" />

@@ -22,21 +22,38 @@ public partial class Projects: IPublishable
 
     public void SendToApproval()
     {
-        throw new NotImplementedException();
+        if (HasAllAssetsWithStatus(EContentStatus.ReadyToApprove))
+            Status = EContentStatus.ReadyToApprove;
     }
 
     public void Approve()
     {
-        throw new NotImplementedException();
+        if (HasAllAssetsWithStatus(EContentStatus.Approved))
+            Status = EContentStatus.Approved;
     }
 
     public void Reject()
     {
-        throw new NotImplementedException();
+        Status = EContentStatus.Rejected;
     }
 
     public void ReturnToEdit()
     {
-        throw new NotImplementedException();
+        Status = EContentStatus.Draft;
+    }
+    
+    private bool HasAllAssetsWithStatus(EContentStatus status) => ConstructionPermits.All(asset => asset.Status == status);
+    
+    public void AddConstructionPermit(ConstructionPermit constructionPermit)
+    {
+        if (ExistsConstructionPermit(constructionPermit)) return;
+        ConstructionPermits.Add(constructionPermit);
+    }
+    
+    private bool ExistsConstructionPermit(ConstructionPermit constructionPermit) => ConstructionPermits.Any(ConstructionPermit => ConstructionPermit.Id == constructionPermit.Id);
+    
+    public void updatePartialBudget(long partialBudget)
+    {
+        PartialBudget = partialBudget;
     }
 }

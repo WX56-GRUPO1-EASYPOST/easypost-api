@@ -5,13 +5,17 @@ namespace easypost_api.ManageProject.Domain.Model.Entities;
 public partial class ConstructionPermit: IPublishable
 {
     public int Id { get; }
+    
+    public string Title { get; private set; }
     public EContentStatus Status { get; protected set; }
     
-    public ConstructionPermit(int id)
+    public ConstructionPermit(int id, string title)
     {
+        Id = id;
+        Title = title;
         Status = EContentStatus.Draft;
     }
-
+    
     public void SendToApproval()
     {
         Status = EContentStatus.ReadyToApprove;
