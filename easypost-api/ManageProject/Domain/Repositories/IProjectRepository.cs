@@ -5,5 +5,5 @@ namespace easypost_api.ManageProject.Domain.Repositories;
 
 public interface IProjectRepository: IBaseRepository<Projects>
 {
-    
+    Task<IEnumerable<Projects>> FindByLocationIdAsync(int locationId);
 }

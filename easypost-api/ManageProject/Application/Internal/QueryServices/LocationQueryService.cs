@@ -12,8 +12,8 @@ public class LocationQueryService(ILocationRepository locationRepository): ILoca
         return await locationRepository.FindByIdAsync(query.Id);
     }
 
-    public Task<IEnumerable<Location>> Handle(GetAllLocationsQuery query)
+    public async Task<IEnumerable<Location>> Handle(GetAllLocationsQuery query)
     {
-        throw new NotImplementedException();
+        return await locationRepository.ListAsync();
     }
 }
