@@ -4,7 +4,14 @@ namespace easypost_api.ManageProject.Domain.Model.Entities;
 
 public class Location
 {
-    public Location(string department, string province, string district, string locality, string address, string reference)
+    public Location(
+        string department, 
+        string province, 
+        string district, 
+        string locality, 
+        string address, 
+        string reference
+        )
     {
         Department = department;
         Province = province;

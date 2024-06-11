@@ -13,7 +13,7 @@ public partial class Projects
         ): this()
     {
         Title = title;
-        AccesCode = accesCode;
+        AccessCode = accesCode;
         TotalBudget = totalBudget;
         PartialBudget = partialBudget;
         LocationId = locationId;
@@ -22,7 +22,7 @@ public partial class Projects
     public int Id { get; }
     public string Title { get; private set; }
 
-    public string AccesCode { get; private set; }
+    public string AccessCode { get; private set; }
     
     public long TotalBudget { get; private set; }
     

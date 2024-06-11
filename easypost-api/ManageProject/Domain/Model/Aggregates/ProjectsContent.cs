@@ -8,7 +8,7 @@ public partial class Projects: IPublishable
     public Projects()
     {
         Title = string.Empty;
-        AccesCode = string.Empty;
+        AccessCode = string.Empty;
         TotalBudget = 0;
         PartialBudget = 0;
         ConstructionPermits = new List<ConstructionPermit>();
