@@ -1,5 +1,3 @@
-using easypost_api.ManageProject.Application.Internal.CommandServices;
-using easypost_api.ManageProject.Domain.Model.Commands;
 using easypost_api.ManageProject.Domain.Model.Queries;
 using easypost_api.ManageProject.Domain.Services;
 using easypost_api.ManageProject.Interfaces.REST.Resources;
