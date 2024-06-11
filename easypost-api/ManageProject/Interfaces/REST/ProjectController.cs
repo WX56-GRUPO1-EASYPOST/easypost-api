@@ -1,4 +1,5 @@
 using easypost_api.ManageProject.Application.Internal.CommandServices;
+using easypost_api.ManageProject.Domain.Model.Commands;
 using easypost_api.ManageProject.Domain.Model.Queries;
 using easypost_api.ManageProject.Domain.Services;
 using easypost_api.ManageProject.Interfaces.REST.Resources;
@@ -24,6 +25,15 @@ public class ProjectController(
     }
 
     [HttpGet]
+    public async Task<IActionResult> GetAllProjects()
+    {
+        var getAllProjectsQuery = new GetAllProjectsQuery();
+        var projects = await projectQueryService.Handle(getAllProjectsQuery);
+        var resources = projects.Select(ProjectResourceFromEntityAssembler.ToResourceFromEntity);
+        return Ok(resources);
+    }
+    
+    [HttpGet("{projectId}")]
     public async Task<IActionResult> GetProjectsById([FromRoute] int projectId)
     {
         var project = await projectQueryService.Handle(new GetProjectsByIdQuery(projectId));
@@ -31,4 +41,17 @@ public class ProjectController(
         var resource = ProjectResourceFromEntityAssembler.ToResourceFromEntity(project);
         return Ok(resource);
     }
+    
+    [HttpPost("{projectId}/Permits")]
+    public async Task<IActionResult> AddPermitToProject([FromBody] AddConstructionPermitToProjectResource addPermitToProjectResource,
+        [FromRoute] int projectId)
+    {
+        var addPermitToProjectCommand =
+            AddConstructionPermitToProjectCommandFromResourceAssembler.ToCommandFromResource(addPermitToProjectResource,
+                projectId);
+        var project = await projectCommandService.Handle(addPermitToProjectCommand);
+        var resource = ProjectResourceFromEntityAssembler.ToResourceFromEntity(project);
+        return CreatedAtAction(nameof(GetProjectsById), new { projectId = resource.Id }, resource);
+    }
+    
 }
