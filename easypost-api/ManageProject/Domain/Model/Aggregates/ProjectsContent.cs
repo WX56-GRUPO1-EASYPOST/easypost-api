@@ -44,13 +44,15 @@ public partial class Projects: IPublishable
     
     private bool HasAllAssetsWithStatus(EContentStatus status) => ConstructionPermits.All(asset => asset.Status == status);
     
-    public void AddConstructionPermit(ConstructionPermit constructionPermit)
+    public void AddConstructionPermit(string title)
     {
-        if (ExistsConstructionPermit(constructionPermit)) return;
-        ConstructionPermits.Add(constructionPermit);
+        if (ExistsConstructionPermitByTitle(title)) return;
+        ConstructionPermits.Add(new ConstructionPermit(title));
     }
     
-    private bool ExistsConstructionPermit(ConstructionPermit constructionPermit) => ConstructionPermits.Any(ConstructionPermit => ConstructionPermit.Id == constructionPermit.Id);
+    private bool ExistsConstructionPermit(ConstructionPermit constructionPermit) => ConstructionPermits.Any(permit => permit.Id == constructionPermit.Id);
+    
+    private bool ExistsConstructionPermitByTitle(string title) => ConstructionPermits.Any(permit => permit.Title == title);
     
     public void updatePartialBudget(long partialBudget)
     {

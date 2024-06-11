@@ -9,9 +9,8 @@ public partial class ConstructionPermit: IPublishable
     public string Title { get; private set; }
     public EContentStatus Status { get; protected set; }
     
-    public ConstructionPermit(int id, string title)
+    public ConstructionPermit(string title)
     {
-        Id = id;
         Title = title;
         Status = EContentStatus.Draft;
     }
