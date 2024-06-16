@@ -7,7 +7,7 @@ namespace easypost_api.ManageProject.Interfaces.REST;
 
 [ApiController]
 [Route("api/v1/locations/{locationId:int}/projects")]
-[Tags("Locations")]
+[Tags("Location")]
 public class LocationProjectController(
         IProjectQueryService projectQueryService
     ): ControllerBase

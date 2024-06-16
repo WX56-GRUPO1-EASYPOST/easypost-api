@@ -3,12 +3,12 @@ using easypost_api.ManageProject.Domain.Model.ValueObjects;
 
 namespace easypost_api.ManageProject.Domain.Model.Aggregates;
 
-public partial class Projects: IPublishable
+public partial class Project: IPublishable
 {
-    public Projects()
+    public Project()
     {
         Title = string.Empty;
-        AccessCode = string.Empty;
+        AccessCode = 0;
         TotalBudget = 0;
         PartialBudget = 0;
         ConstructionPermits = new List<ConstructionPermit>();

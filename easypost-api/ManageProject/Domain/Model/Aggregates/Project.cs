@@ -2,18 +2,18 @@ using easypost_api.ManageProject.Domain.Model.Entities;
 
 namespace easypost_api.ManageProject.Domain.Model.Aggregates;
 
-public partial class Projects
+public partial class Project
 {
-    public Projects(
-        string title, 
-        string accesCode, 
+    public Project(
+        string title,
+        int accessCode,
         long totalBudget, 
         long partialBudget, 
         int locationId
         ): this()
     {
         Title = title;
-        AccessCode = accesCode;
+        AccessCode = accessCode;
         TotalBudget = totalBudget;
         PartialBudget = partialBudget;
         LocationId = locationId;
@@ -22,7 +22,7 @@ public partial class Projects
     public int Id { get; }
     public string Title { get; private set; }
 
-    public string AccessCode { get; private set; }
+    public int AccessCode { get; private set; }
     
     public long TotalBudget { get; private set; }
     
@@ -31,4 +31,9 @@ public partial class Projects
     public Location Location { get; internal set; }
     
     public int LocationId { get; private set; }    
+
+    private int GenerateUniqueAccessCode()
+    {
+        return new Random().Next(100000, 999999);
+    }
 }

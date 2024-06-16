@@ -4,9 +4,9 @@ using Microsoft.OpenApi.Extensions;
 
 namespace easypost_api.ManageProject.Interfaces.REST.Transform;
 
-public class ProjectResourceFromEntityAssembler
+public static class ProjectResourceFromEntityAssembler
 {
-    public static ProjectResource ToResourceFromEntity(Projects project)
+    public static ProjectResource ToResourceFromEntity(Project project)
     {
         return new ProjectResource(
             project.Id,

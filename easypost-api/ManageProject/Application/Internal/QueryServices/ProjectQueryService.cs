@@ -7,18 +7,23 @@ namespace easypost_api.ManageProject.Application.Internal.QueryServices;
 
 public class ProjectQueryService(IProjectRepository projectRepository): IProjectQueryService
 {
-    public async Task<Projects?> Handle(GetProjectsByIdQuery query)
+    public async Task<Project?> Handle(GetProjectsByIdQuery query)
     {
         return await projectRepository.FindByIdAsync(query.Id);
     }
 
-    public async Task<IEnumerable<Projects>> Handle(GetAllProjectsQuery query)
+    public async Task<IEnumerable<Project>> Handle(GetAllProjectsQuery query)
     {
         return await projectRepository.ListAsync();
     }
 
-    public Task<IEnumerable<Projects>> Handle(GetProjectsByLocationQuery query)
+    public Task<IEnumerable<Project>> Handle(GetProjectsByLocationQuery query)
     {
         return projectRepository.FindByLocationIdAsync(query.LocationId);
+    }
+    
+    public Task<Project?> Handle(GetProjectsByAccessCodeQuery query)
+    {
+        return projectRepository.FindByAccessCodeAsync(query.AccessCode);
     }
 }

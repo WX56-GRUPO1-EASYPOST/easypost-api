@@ -5,6 +5,6 @@ namespace easypost_api.ManageProject.Domain.Services;
 
 public interface IProjectCommandService
 {
-    Task<Projects?> Handle(CreateProjectCommand command);
-    Task<Projects?> Handle(AddConstructionPermitToProjectCommand command);
+    Task<Project?> Handle(CreateProjectCommand command);
+    Task<Project?> Handle(AddConstructionPermitToProjectCommand command);
 }

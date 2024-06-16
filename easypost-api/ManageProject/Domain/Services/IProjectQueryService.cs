@@ -5,7 +5,7 @@ namespace easypost_api.ManageProject.Domain.Services;
 
 public interface IProjectQueryService
 {
-    Task<Projects?> Handle(GetProjectsByIdQuery query);
-    Task<IEnumerable<Projects>> Handle(GetAllProjectsQuery query);
-    Task<IEnumerable<Projects>> Handle(GetProjectsByLocationQuery query);
+    Task<Project?> Handle(GetProjectsByIdQuery query);
+    Task<IEnumerable<Project>> Handle(GetAllProjectsQuery query);
+    Task<IEnumerable<Project>> Handle(GetProjectsByLocationQuery query);
 }

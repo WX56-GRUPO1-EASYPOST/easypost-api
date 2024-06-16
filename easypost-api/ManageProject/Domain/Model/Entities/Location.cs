@@ -35,5 +35,5 @@ public class Location
     
     public string Reference { get; private set; }
     
-    public ICollection<Projects> Projects { get; }
+    public ICollection<Project> Projects { get; }
 }

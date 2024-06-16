@@ -4,7 +4,7 @@ using easypost_api.ManageProject.Interfaces.REST.Resources;
 using easypost_api.ManageProject.Interfaces.REST.Transform;
 using Microsoft.AspNetCore.Mvc;
 
-namespace easypost_api.ManageProject.Interfaces;
+namespace easypost_api.ManageProject.Interfaces.REST;
 
 [ApiController]
 [Route("api/v1/[controller]")]

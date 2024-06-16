@@ -3,7 +3,7 @@ using EntityFrameworkCore.CreatedUpdatedDate.Contracts;
 
 namespace easypost_api.ManageProject.Domain.Model.Aggregates;
 
-public partial class Projects: IEntityWithCreatedUpdatedDate
+public partial class Project: IEntityWithCreatedUpdatedDate
 {
     [Column("CreatedAt")] public DateTimeOffset? CreatedDate { get; set; }
 

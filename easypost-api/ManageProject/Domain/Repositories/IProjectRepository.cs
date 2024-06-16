@@ -3,7 +3,8 @@ using easypost_api.Shared.Domain.Repositories;
 
 namespace easypost_api.ManageProject.Domain.Repositories;
 
-public interface IProjectRepository: IBaseRepository<Projects>
+public interface IProjectRepository: IBaseRepository<Project>
 {
-    Task<IEnumerable<Projects>> FindByLocationIdAsync(int locationId);
+    Task<IEnumerable<Project>> FindByLocationIdAsync(int locationId);
+    Task<Project?> FindByAccessCodeAsync(int accessCode);
 }

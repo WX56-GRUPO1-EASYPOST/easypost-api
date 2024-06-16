@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace easypost_api.ManageProject.Interfaces.REST;
 
 [ApiController]
-[Route("api/v1/projects")]
-public class ProjectController(
+[Route("api/v1/[controller]")]
+public class ProjectsController(
     IProjectCommandService projectCommandService,
     IProjectQueryService projectQueryService): ControllerBase
 {
