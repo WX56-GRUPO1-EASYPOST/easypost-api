@@ -3,6 +3,8 @@ using easypost_api.IAM.Application.Internal.QueryServices;
 using easypost_api.IAM.Domain.Repositories;
 using easypost_api.IAM.Domain.Services;
 using easypost_api.IAM.Infrastructurre.Persistence.EFC.Repositories;
+using easypost_api.IAM.Interfaces.ACL;
+using easypost_api.IAM.Interfaces.ACL.Services;
 using easypost_api.Profiles.Application.Internal.CommandServices;
 using easypost_api.Profiles.Application.Internal.QueryServices;
 using easypost_api.Profiles.Domain.Repositories;
@@ -90,6 +92,7 @@ builder.Services.AddScoped<IProfilesContextFacade,ProfilesContextFacade>();
 // Bounded Context "Users" Injection Configuration
 
 builder.Services.AddScoped<IUserRepository,UserRepository>();
+builder.Services.AddScoped<IUserContextFacade, UserContextFacade>();
 builder.Services.AddScoped<IUserCommandService,UserCommandService>();
 builder.Services.AddScoped<IUserQueryService,UserQueryService>();
 

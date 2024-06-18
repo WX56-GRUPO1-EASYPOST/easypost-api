@@ -56,6 +56,11 @@ public class AppDbContext : DbContext
                 a.Property(p => p.Distrito).HasColumnName("District");
                 a.Property(p => p.Residential).HasColumnName("Residential");
             });
+
+        builder.Entity<User>()
+            .HasOne(u => u.Profile)
+            .WithOne(p => p.User)
+            .HasForeignKey<Profile>(p => p.UserId);
         
         // IAM Context
 

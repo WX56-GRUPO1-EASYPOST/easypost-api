@@ -1,3 +1,4 @@
+using easypost_api.IAM.Domain.Model.Aggregates;
 using easypost_api.Profiles.Domain.Model.Commands;
 using easypost_api.Profiles.domain.model.valueObjects;
 
@@ -7,10 +8,12 @@ public partial class Profile
 {
 
     public int Id { get; }
-    public int UserId { get; private set;}
+    public int UserId { get; set;}
     public Details Detail { get; private set; }
     public Contact Contact { get; private set; }
     public Address Address { get; private set; }
+    
+    public User User { get; set; }
     
     public string FullContact => Contact.FullContact;
     public string FullAddress => Address.FullAddress;
