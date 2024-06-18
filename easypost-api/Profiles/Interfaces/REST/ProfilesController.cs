@@ -43,4 +43,17 @@ public class ProfilesController(
         var resources = profiles.Select(ProfileResourceFromEntityAssembler.ToResourceFromEntity);
         return Ok(resources);
     }
+
+    [HttpGet("user/{userId:int}")]
+    public async Task<IActionResult> GetProfileByUserId(int userId)
+    {
+        var getProfileByUserIdQuery = new GetProfileByUserIdQuery(userId);
+        var profile = await profileQueryService.Handle(getProfileByUserIdQuery);
+        if (profile==null)
+        {
+            return BadRequest();
+        }
+        var profileResource = ProfileResourceFromEntityAssembler.ToResourceFromEntity(profile);
+        return Ok(profileResource);
+    }
 }

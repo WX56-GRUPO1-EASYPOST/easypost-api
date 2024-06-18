@@ -7,5 +7,6 @@ public interface IProfileQueryService
 {
     Task<Profile?> Handle(GetProfileByIdQuery query);
     Task<IEnumerable<Profile>> Handle(GetAllProfilesQuery query);
-    bool Handle(ExistProfileByIdQuery query); 
+    bool Handle(ExistProfileByIdQuery query);
+    Task<Profile?> Handle(GetProfileByUserIdQuery query);
 }
