@@ -44,6 +44,21 @@ public class AppDbContext(DbContextOptions options): DbContext(options)
         builder.Entity<ConstructionPermit>().Property(c => c.Status).IsRequired().HasMaxLength(255);
         builder.Entity<Project>().HasMany(t => t.ConstructionPermits);
         
+        builder.Entity<Material>().HasKey(c => c.Id);
+        builder.Entity<Material>().Property(c => c.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<Material>().Property(c => c.Name).IsRequired().HasMaxLength(255);
+        builder.Entity<Material>().Property(c => c.Description).IsRequired().HasMaxLength(255);
+        builder.Entity<Material>().Property(c => c.Cost).IsRequired();
+        
+        builder.Entity<ProjectMaterials>().HasKey(pm => new { pm.ProjectId, pm.MaterialId });
+        builder.Entity<ProjectMaterials>().HasOne(pm => pm.Project)
+            .WithMany(p => p.ProjectMaterials)
+            .HasForeignKey(pm => pm.ProjectId);
+        builder.Entity<ProjectMaterials>().HasOne(pm => pm.Material)
+            .WithMany(m => m.ProjectMaterials)
+            .HasForeignKey(pm => pm.MaterialId);
+        builder.Entity<ProjectMaterials>().Property(pm => pm.Amount).IsRequired();
+        
         // Location Conection
 
         builder.Entity<Location>()

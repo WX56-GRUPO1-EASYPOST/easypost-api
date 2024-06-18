@@ -72,6 +72,12 @@ builder.Services.AddScoped<IProjectCommandService, ProjectCommandService>();
 builder.Services.AddScoped<ILocationRepository, LocationRepository>();
 builder.Services.AddScoped<ILocationQueryService, LocationQueryService>();
 builder.Services.AddScoped<ILocationCommandService, LocationCommandService>();
+builder.Services.AddScoped<IMaterialRepository, MaterialRepository>();
+builder.Services.AddScoped<IMaterialQueryService, MaterialQueryService>();
+builder.Services.AddScoped<IMaterialCommandService, MaterialCommandService>();
+builder.Services.AddScoped<IProjectMaterialRepository, ProjectMaterialsRepository>();
+builder.Services.AddScoped<IProjectMaterialsQueryService, ProjectMaterialsQueryService>();
+builder.Services.AddScoped<IProjectMaterialsCommandService, ProjectMaterialsCommandService>();
 
 // Bounded Context "2" Injection Configuration
 

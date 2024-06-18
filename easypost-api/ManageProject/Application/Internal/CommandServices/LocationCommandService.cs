@@ -6,7 +6,10 @@ using easypost_api.Shared.Domain.Repositories;
 
 namespace easypost_api.ManageProject.Application.Internal.CommandServices;
 
-public class LocationCommandService(ILocationRepository locationRepository, IUnitOfWork unitOfWork): ILocationCommandService
+public class LocationCommandService(
+    ILocationRepository locationRepository, 
+    IUnitOfWork unitOfWork
+    ): ILocationCommandService
 {
     public async Task<Location?> Handle(CreateLocationCommand command)
     {

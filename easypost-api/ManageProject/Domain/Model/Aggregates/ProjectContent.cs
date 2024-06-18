@@ -19,7 +19,6 @@ public partial class Project: IPublishable
     
     public ICollection<ConstructionPermit> ConstructionPermits { get; private set; }
 
-
     public void SendToApproval()
     {
         if (HasAllAssetsWithStatus(EContentStatus.ReadyToApprove))
@@ -54,7 +53,7 @@ public partial class Project: IPublishable
     
     private bool ExistsConstructionPermitByTitle(string title) => ConstructionPermits.Any(permit => permit.Title == title);
     
-    public void updatePartialBudget(long partialBudget)
+    public void UpdatePartialBudget(long partialBudget)
     {
         PartialBudget = partialBudget;
     }

@@ -32,8 +32,5 @@ public partial class Project
     
     public int LocationId { get; private set; }    
 
-    private int GenerateUniqueAccessCode()
-    {
-        return new Random().Next(100000, 999999);
-    }
+    public ICollection<ProjectMaterials> ProjectMaterials { get; }
 }
