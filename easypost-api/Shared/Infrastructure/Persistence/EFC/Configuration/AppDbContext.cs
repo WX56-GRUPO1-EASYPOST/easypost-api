@@ -1,3 +1,5 @@
+using easypost_api.DailyActivities.Domain.Model.Aggregates;
+using easypost_api.DailyActivities.Domain.Model.Entities;
 using easypost_api.ManageProject.Domain.Model.Aggregates;
 using easypost_api.ManageProject.Domain.Model.Entities;
 using easypost_api.Poles.Domain.Model.Aggregates;
@@ -88,6 +90,12 @@ public class AppDbContext(DbContextOptions options): DbContext(options)
         builder.Entity<PolePicture>().Property(c => c.ImageUri).IsRequired();
         builder.Entity<PolePicture>().Property(c => c.Description).IsRequired().HasMaxLength(255);
         builder.Entity<Pole>().HasMany(t => t.PolePictures);
+
+        builder.Entity<Pole>()
+            .HasOne(l => l.Project)
+            .WithMany(t => t.Poles)
+            .HasForeignKey(t => t.ProjectId)
+            .HasPrincipalKey(t => t.Id);
         
         // GeoReference Connection
         
@@ -96,6 +104,25 @@ public class AppDbContext(DbContextOptions options): DbContext(options)
             .WithOne(t => t.GeoReference)
             .HasForeignKey<Pole>(t => t.GeoReferenceId)
             .HasPrincipalKey<GeoReference>(t => t.Id);
+        
+        // Daily Activity Bounded Context
+        
+        builder.Entity<DailyActivity>().HasKey(c => c.Id);
+        builder.Entity<DailyActivity>().Property(c => c.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<DailyActivity>().Property(c => c.Description).IsRequired().HasMaxLength(255);
+        builder.Entity<DailyActivity>().Property(c => c.Name).IsRequired().HasMaxLength(255);
+        
+        builder.Entity<DailyActivityPicture>().HasKey(c => c.Id);
+        builder.Entity<DailyActivityPicture>().Property(c => c.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<DailyActivityPicture>().Property(c => c.ImageUri).IsRequired();
+        builder.Entity<DailyActivityPicture>().Property(c => c.Description).IsRequired().HasMaxLength(255);
+        builder.Entity<DailyActivity>().HasMany(t => t.DailyActivityPictures);
+        
+        builder.Entity<DailyActivity>()
+            .HasOne(l => l.Project)
+            .WithMany(t => t.DailyActivities)
+            .HasForeignKey(t => t.ProjectId)
+            .HasPrincipalKey(t => t.Id);
         
         // -------
         builder.UseSnakeCaseWithPluralizedTableNamingConvention();

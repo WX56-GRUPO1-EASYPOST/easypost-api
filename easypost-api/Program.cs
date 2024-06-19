@@ -1,4 +1,9 @@
 using System.Security.Permissions;
+using easypost_api.DailyActivities.Application.Internal.CommandServices;
+using easypost_api.DailyActivities.Application.Internal.QueryServices;
+using easypost_api.DailyActivities.Domain.Repositories;
+using easypost_api.DailyActivities.Domain.Services;
+using easypost_api.DailyActivities.Infrastructure.Persistence.Repositories;
 using easypost_api.ManageProject.Application.Internal.CommandServices;
 using easypost_api.ManageProject.Application.Internal.QueryServices;
 using easypost_api.ManageProject.Domain.Repositories;
@@ -95,6 +100,12 @@ builder.Services.AddScoped<IPoleCommandService, PoleCommandService>();
 builder.Services.AddScoped<IGeoReferenceRepository, GeoReferenceRepository>();
 builder.Services.AddScoped<IGeoReferenceQueryService, GeoReferenceQueryService>();
 builder.Services.AddScoped<IGeoReferenceCommandService, GeoReferenceCommandService>();
+
+// Daily Activities Bounded Context Injection Configuration
+
+builder.Services.AddScoped<IDailyActivityRepository, DailyActivityRepository>();
+builder.Services.AddScoped<IDailyActivityQueryService, DailyActivityQueryService>();
+builder.Services.AddScoped<IDailyActivityCommandService, DailyActivityCommandService>();
 
 // Bounded Context "2" Injection Configuration
 

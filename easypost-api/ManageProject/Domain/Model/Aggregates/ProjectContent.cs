@@ -1,5 +1,7 @@
+using easypost_api.DailyActivities.Domain.Model.Aggregates;
 using easypost_api.ManageProject.Domain.Model.Entities;
 using easypost_api.ManageProject.Domain.Model.ValueObjects;
+using easypost_api.Poles.Domain.Model.Aggregates;
 
 namespace easypost_api.ManageProject.Domain.Model.Aggregates;
 
@@ -12,10 +14,16 @@ public partial class Project: IPublishable
         TotalBudget = 0;
         PartialBudget = 0;
         ConstructionPermits = new List<ConstructionPermit>();
+        Poles = new List<Pole>();
+        DailyActivities = new List<DailyActivity>();
         Status = EContentStatus.Draft;
     }
     
     public EContentStatus Status { get; private set; }
+    
+    public ICollection<Pole> Poles { get; private set; }
+    
+    public ICollection<DailyActivity> DailyActivities { get; private set; }
     
     public ICollection<ConstructionPermit> ConstructionPermits { get; private set; }
 
