@@ -2,6 +2,8 @@ namespace easypost_api.DailyActivities.Domain.Model.Entities;
 
 public partial class DailyActivityPicture
 {
+    // Constructor para EF Core
+    private DailyActivityPicture() { }
     public DailyActivityPicture(string imageUri, string description)
     {
         ImageUri = new Uri(imageUri);
