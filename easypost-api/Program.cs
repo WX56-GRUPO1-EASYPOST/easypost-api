@@ -1,4 +1,22 @@
+using System.Security.Permissions;
+using easypost_api.DailyActivities.Application.Internal.CommandServices;
+using easypost_api.DailyActivities.Application.Internal.QueryServices;
+using easypost_api.DailyActivities.Domain.Repositories;
+using easypost_api.DailyActivities.Domain.Services;
+using easypost_api.DailyActivities.Infrastructure.Persistence.Repositories;
+using easypost_api.ManageProject.Application.Internal.CommandServices;
+using easypost_api.ManageProject.Application.Internal.QueryServices;
+using easypost_api.ManageProject.Domain.Repositories;
+using easypost_api.ManageProject.Domain.Services;
+using easypost_api.ManageProject.Infrastructure.Persistence.EFC.Repositories;
+using easypost_api.Poles.Application.CommandServices;
+using easypost_api.Poles.Application.Internal.QueryServices;
+using easypost_api.Poles.Domain.Repositories;
+using easypost_api.Poles.Domain.Services;
+using easypost_api.Poles.Infrastructure.Persistence.EFC.Repositories;
+using easypost_api.Shared.Domain.Repositories;
 using easypost_api.Shared.Infrastructure.Persistence.EFC.Configuration;
+using easypost_api.Shared.Infrastructure.Persistence.EFC.Repositories;
 using easypost_api.Shared.Interfaces.ASP.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -54,8 +72,40 @@ builder.Services.AddRouting(options=>options.LowercaseUrls=true);
 // Configure Dependency Injection
 
 // Shared Bounded Context Injection Configuration
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-// Bounded Context "1" Injection Configuration
+// Bounded Context Management Project Injection Configuration
+
+builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
+builder.Services.AddScoped<IProjectQueryService, ProjectQueryService>();
+builder.Services.AddScoped<IProjectCommandService, ProjectCommandService>();
+builder.Services.AddScoped<ILocationRepository, LocationRepository>();
+builder.Services.AddScoped<ILocationQueryService, LocationQueryService>();
+builder.Services.AddScoped<ILocationCommandService, LocationCommandService>();
+
+// Material Bounded Context Injection Configuration
+
+builder.Services.AddScoped<IMaterialRepository, MaterialRepository>();
+builder.Services.AddScoped<IMaterialQueryService, MaterialQueryService>();
+builder.Services.AddScoped<IMaterialCommandService, MaterialCommandService>();
+builder.Services.AddScoped<IProjectMaterialRepository, ProjectMaterialsRepository>();
+builder.Services.AddScoped<IProjectMaterialsQueryService, ProjectMaterialsQueryService>();
+builder.Services.AddScoped<IProjectMaterialsCommandService, ProjectMaterialsCommandService>();
+
+// Pole Bounded Context Injection Configuration
+
+builder.Services.AddScoped<IPoleRepository, PoleRepository>();
+builder.Services.AddScoped<IPoleQueryService, PoleQueryService>();
+builder.Services.AddScoped<IPoleCommandService, PoleCommandService>();
+builder.Services.AddScoped<IGeoReferenceRepository, GeoReferenceRepository>();
+builder.Services.AddScoped<IGeoReferenceQueryService, GeoReferenceQueryService>();
+builder.Services.AddScoped<IGeoReferenceCommandService, GeoReferenceCommandService>();
+
+// Daily Activities Bounded Context Injection Configuration
+
+builder.Services.AddScoped<IDailyActivityRepository, DailyActivityRepository>();
+builder.Services.AddScoped<IDailyActivityQueryService, DailyActivityQueryService>();
+builder.Services.AddScoped<IDailyActivityCommandService, DailyActivityCommandService>();
 
 // Bounded Context "2" Injection Configuration
 
