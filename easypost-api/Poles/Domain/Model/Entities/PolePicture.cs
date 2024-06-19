@@ -2,6 +2,7 @@ namespace easypost_api.Poles.Domain.Model.Entities;
 
 public partial class PolePicture
 {
+    private PolePicture() {}
     public PolePicture(string imageUri, string description)
     {
         ImageUri = new Uri(imageUri);
