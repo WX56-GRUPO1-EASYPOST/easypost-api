@@ -2,7 +2,7 @@ using easypost_api.ManageProject.Domain.Model.Aggregates;
 
 namespace easypost_api.ManageProject.Domain.Model.Entities;
 
-public class ProjectMaterials
+public partial class ProjectMaterials
 {
     public ProjectMaterials(int projectId, int materialId, int amount)
     {

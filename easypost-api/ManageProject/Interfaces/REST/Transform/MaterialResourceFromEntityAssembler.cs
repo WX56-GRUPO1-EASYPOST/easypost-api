@@ -3,7 +3,7 @@ using easypost_api.ManageProject.Interfaces.REST.Resources;
 
 namespace easypost_api.ManageProject.Interfaces.REST.Transform;
 
-public class MaterialResourceFromEntityAssembler
+public static class MaterialResourceFromEntityAssembler
 {
     public static MaterialResource ToResourceFromEntity(Material entity)
     {

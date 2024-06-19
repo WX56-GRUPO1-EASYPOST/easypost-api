@@ -1,5 +1,7 @@
 using easypost_api.ManageProject.Domain.Model.Aggregates;
 using easypost_api.ManageProject.Domain.Model.Entities;
+using easypost_api.Poles.Domain.Model.Aggregates;
+using easypost_api.Poles.Domain.Model.Entities;
 using easypost_api.Shared.Infrastructure.Persistence.EFC.Configuration.Extensions;
 using EntityFrameworkCore.CreatedUpdatedDate.Extensions;
 using Microsoft.EntityFrameworkCore;
@@ -44,6 +46,16 @@ public class AppDbContext(DbContextOptions options): DbContext(options)
         builder.Entity<ConstructionPermit>().Property(c => c.Status).IsRequired().HasMaxLength(255);
         builder.Entity<Project>().HasMany(t => t.ConstructionPermits);
         
+        // Location Conection
+
+        builder.Entity<Location>()
+            .HasMany(l => l.Projects)
+            .WithOne(t => t.Location)
+            .HasForeignKey(t => t.LocationId)
+            .HasPrincipalKey(t => t.Id);
+
+        // Material Bounded Context
+        
         builder.Entity<Material>().HasKey(c => c.Id);
         builder.Entity<Material>().Property(c => c.Id).IsRequired().ValueGeneratedOnAdd();
         builder.Entity<Material>().Property(c => c.Name).IsRequired().HasMaxLength(255);
@@ -59,13 +71,31 @@ public class AppDbContext(DbContextOptions options): DbContext(options)
             .HasForeignKey(pm => pm.MaterialId);
         builder.Entity<ProjectMaterials>().Property(pm => pm.Amount).IsRequired();
         
-        // Location Conection
-
-        builder.Entity<Location>()
-            .HasMany(l => l.Projects)
-            .WithOne(t => t.Location)
-            .HasForeignKey(t => t.LocationId)
-            .HasPrincipalKey(t => t.Id);
+        // Poles Bounded Context
+        
+        builder.Entity<GeoReference>().HasKey(c => c.Id);
+        builder.Entity<GeoReference>().Property(c => c.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<GeoReference>().Property(c => c.Description).IsRequired().HasMaxLength(255);
+        builder.Entity<GeoReference>().Property(c => c.Latitude).IsRequired().HasMaxLength(255);
+        builder.Entity<GeoReference>().Property(c => c.Longitude).IsRequired().HasMaxLength(255);
+        
+        builder.Entity<Pole>().HasKey(c => c.Id);
+        builder.Entity<Pole>().Property(c => c.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<Pole>().Property(c => c.Description).IsRequired().HasMaxLength(255);
+        
+        builder.Entity<PolePicture>().HasKey(c => c.Id);
+        builder.Entity<PolePicture>().Property(c => c.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<PolePicture>().Property(c => c.ImageUri).IsRequired();
+        builder.Entity<PolePicture>().Property(c => c.Description).IsRequired().HasMaxLength(255);
+        builder.Entity<Pole>().HasMany(t => t.PolePictures);
+        
+        // GeoReference Connection
+        
+        builder.Entity<GeoReference>()
+            .HasOne(l => l.Poles)
+            .WithOne(t => t.GeoReference)
+            .HasForeignKey<Pole>(t => t.GeoReferenceId)
+            .HasPrincipalKey<GeoReference>(t => t.Id);
         
         // -------
         builder.UseSnakeCaseWithPluralizedTableNamingConvention();

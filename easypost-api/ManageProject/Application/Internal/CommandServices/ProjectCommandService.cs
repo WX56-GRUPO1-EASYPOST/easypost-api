@@ -34,7 +34,7 @@ public class ProjectCommandService(IProjectRepository projectRepository, ILocati
         return project;
     }
 
-    private int GenerateUniqueAccessCode()
+    private static int GenerateUniqueAccessCode()
     {
         return new Random().Next(100000, 999999);
     }
