@@ -1,7 +1,7 @@
 using easypost_api.IAM.Application.Internal.OutboundServices;
 using BCryptNet = BCrypt.Net.BCrypt;
 
-namespace easypost_api.IAM.Infrastructurre.Hashing.BCrypt.Services;
+namespace easypost_api.IAM.Infrastructure.Hashing.BCrypt.Services;
 
 public class HashingService : IHashingService
 {

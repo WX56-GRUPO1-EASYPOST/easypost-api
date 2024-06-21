@@ -1,4 +1,4 @@
-namespace easypost_api.IAM.Infrastructurre.Tokens.JWT.Configuration;
+namespace easypost_api.IAM.Infrastructure.Tokens.JWT.Configuration;
 
 public class TokenSettings
 {

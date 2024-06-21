@@ -1,9 +1,9 @@
 using easypost_api.IAM.Application.Internal.OutboundServices;
 using easypost_api.IAM.Domain.Model.Queries;
 using easypost_api.IAM.Domain.Services;
-using easypost_api.IAM.Infrastructurre.Pipeline.Middleware.Attributes;
+using easypost_api.IAM.Infrastructure.Pipeline.Middleware.Attributes;
 
-namespace easypost_api.IAM.Infrastructurre.Pipeline.Middleware.Components;
+namespace easypost_api.IAM.Infrastructure.Pipeline.Middleware.Components;
 
 public class RequestAuthorizationMiddleware(RequestDelegate next)
 {

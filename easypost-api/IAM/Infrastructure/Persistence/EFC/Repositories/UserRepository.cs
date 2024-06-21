@@ -4,7 +4,7 @@ using easypost_api.Shared.Infrastructure.Persistence.EFC.Configuration;
 using easypost_api.Shared.Infrastructure.Persistence.EFC.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace easypost_api.IAM.Infrastructurre.Persistence.EFC.Repositories;
+namespace easypost_api.IAM.Infrastructure.Persistence.EFC.Repositories;
 
 public class UserRepository:BaseRepository<User>,IUserRepository
 {

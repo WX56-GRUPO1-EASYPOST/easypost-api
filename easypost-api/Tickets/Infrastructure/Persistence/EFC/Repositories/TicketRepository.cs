@@ -3,7 +3,7 @@ using easypost_api.Shared.Infrastructure.Persistence.EFC.Repositories;
 using easypost_api.Tickets.Domain.Model.Aggregates;
 using easypost_api.Tickets.Domain.Repositories;
 
-namespace easypost_api.Tickets.Infrastructurre.Persistence.EFC.Repositories;
+namespace easypost_api.Tickets.Infrastructure.Persistence.EFC.Repositories;
 
 public class TicketRepository : BaseRepository<Ticket>, ITicketRepository
 {

@@ -1,6 +1,6 @@
 using System.Net.Mime;
 using easypost_api.IAM.Domain.Services;
-using easypost_api.IAM.Infrastructurre.Pipeline.Middleware.Attributes;
+using easypost_api.IAM.Infrastructure.Pipeline.Middleware.Attributes;
 using easypost_api.IAM.Interfaces.REST.Resources;
 using easypost_api.IAM.Interfaces.REST.Transform;
 using Microsoft.AspNetCore.Mvc;

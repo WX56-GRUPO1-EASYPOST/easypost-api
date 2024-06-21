@@ -1,6 +1,6 @@
-using easypost_api.IAM.Infrastructurre.Pipeline.Middleware.Components;
+using easypost_api.IAM.Infrastructure.Pipeline.Middleware.Components;
 
-namespace easypost_api.IAM.Infrastructurre.Pipeline.Middleware.Extensions;
+namespace easypost_api.IAM.Infrastructure.Pipeline.Middleware.Extensions;
 
 public static class RequestAuthorizationMiddlewareExtensions
 {

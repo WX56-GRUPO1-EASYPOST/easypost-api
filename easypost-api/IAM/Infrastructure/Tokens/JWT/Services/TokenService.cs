@@ -2,12 +2,12 @@ using System.Security.Claims;
 using System.Text;
 using easypost_api.IAM.Application.Internal.OutboundServices;
 using easypost_api.IAM.Domain.Model.Aggregates;
-using easypost_api.IAM.Infrastructurre.Tokens.JWT.Configuration;
+using easypost_api.IAM.Infrastructure.Tokens.JWT.Configuration;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 
-namespace easypost_api.IAM.Infrastructurre.Tokens.JWT.Services;
+namespace easypost_api.IAM.Infrastructure.Tokens.JWT.Services;
 
 public class TokenService(IOptions<TokenSettings> tokenSettings):ITokenService
 {

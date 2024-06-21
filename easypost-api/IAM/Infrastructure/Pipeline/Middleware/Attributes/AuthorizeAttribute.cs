@@ -2,7 +2,7 @@ using easypost_api.IAM.Domain.Model.Aggregates;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace easypost_api.IAM.Infrastructurre.Pipeline.Middleware.Attributes;
+namespace easypost_api.IAM.Infrastructure.Pipeline.Middleware.Attributes;
 
 [AttributeUsage(AttributeTargets.Class|AttributeTargets.Method)]
 public class AuthorizeAttribute : Attribute,IAuthorizationFilter
