@@ -1,8 +1,13 @@
 using easypost_api.IAM.Application.Internal.CommandServices;
+using easypost_api.IAM.Application.Internal.OutboundServices;
 using easypost_api.IAM.Application.Internal.QueryServices;
 using easypost_api.IAM.Domain.Repositories;
 using easypost_api.IAM.Domain.Services;
+using easypost_api.IAM.Infrastructurre.Hashing.BCrypt.Services;
 using easypost_api.IAM.Infrastructurre.Persistence.EFC.Repositories;
+using easypost_api.IAM.Infrastructurre.Pipeline.Middleware.Extensions;
+using easypost_api.IAM.Infrastructurre.Tokens.JWT.Configuration;
+using easypost_api.IAM.Infrastructurre.Tokens.JWT.Services;
 using easypost_api.IAM.Interfaces.ACL;
 using easypost_api.IAM.Interfaces.ACL.Services;
 using easypost_api.Profiles.Application.Internal.CommandServices;
@@ -72,10 +77,43 @@ builder.Services.AddSwaggerGen(c =>
             }
         });
     c.EnableAnnotations();
+    c.AddSecurityDefinition("Bearer",new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Description = "Please enter token",
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        BearerFormat = "JWT",
+        Scheme = "bearer"
+    });
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Id = "Bearer",
+                    Type = ReferenceType.SecurityScheme
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
 });
 
 // Configure Lowercase URLs
 builder.Services.AddRouting(options=>options.LowercaseUrls=true);
+
+// Configure CORS Service
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllPolicy", policy =>
+        policy.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader());
+});
+
 
 // Configure Dependency Injection
 
@@ -89,12 +127,18 @@ builder.Services.AddScoped<IProfileCommandService,ProfileCommandService>();
 builder.Services.AddScoped<IProfileQueryService,ProfileQueryService>();
 builder.Services.AddScoped<IProfilesContextFacade,ProfilesContextFacade>();
 
+// TokenSettings Configuration 
+
+builder.Services.Configure<TokenSettings>(builder.Configuration.GetSection("TokenSettings"));
+
 // Bounded Context "Users" Injection Configuration
 
 builder.Services.AddScoped<IUserRepository,UserRepository>();
 builder.Services.AddScoped<IUserContextFacade, UserContextFacade>();
 builder.Services.AddScoped<IUserCommandService,UserCommandService>();
 builder.Services.AddScoped<IUserQueryService,UserQueryService>();
+builder.Services.AddScoped<ITokenService,TokenService>();
+builder.Services.AddScoped<IHashingService,HashingService>();
 
 // Bounded Context "Requests" Injection Configuration
 builder.Services.AddScoped<IRequestRepository, RequestRepository>();
@@ -124,6 +168,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("AllowAllPolicy");
+
+app.UseRequestAuthorization();
 
 app.UseHttpsRedirection();
 

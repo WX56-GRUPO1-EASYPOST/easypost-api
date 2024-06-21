@@ -1,3 +1,4 @@
+using easypost_api.IAM.Application.Internal.OutboundServices;
 using easypost_api.IAM.Domain.Model.Aggregates;
 using easypost_api.IAM.Domain.Model.Commands;
 using easypost_api.IAM.Domain.Repositories;
@@ -12,12 +13,18 @@ public class UserCommandService : IUserCommandService
     private readonly IUserRepository _userRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IProfilesContextFacade _profilesContextFacade;
+    private readonly ITokenService _tokenService;
+    private readonly IHashingService _hashingService; 
 
-    public UserCommandService(IUnitOfWork unitOfWork, IUserRepository userRepository,IProfilesContextFacade profilesContextFacade)
+    public UserCommandService(IUnitOfWork unitOfWork, IUserRepository userRepository,
+        IProfilesContextFacade profilesContextFacade, ITokenService tokenService,
+        IHashingService hashingService)
     {
         _unitOfWork = unitOfWork;
         _userRepository = userRepository;
         _profilesContextFacade = profilesContextFacade;
+        _tokenService = tokenService;
+        _hashingService = hashingService;
     }
 
     public async Task Handle(SignUpCommand command)
@@ -26,13 +33,17 @@ public class UserCommandService : IUserCommandService
         {
             throw new Exception($"Username {command.Username} already exists");
         }
-        var user = new User(command.Username,command.Password, command.Type);
+
+        var hashedPassword = _hashingService.HashPassword(command.Password);
+        var user = new User(command.Username,hashedPassword, command.Type);
         try
         {
             await _userRepository.AddAsync(user);
             await _unitOfWork.CompleteAsync();
             
-            await _profilesContextFacade.CreateProfileForUser(user.Username, "description", "ruc", "telefono", "correo", "departamento", "distrito", "residencial", user.Id);
+            await _profilesContextFacade.CreateProfileForUser(user.Username, "description",
+                "ruc", "telefono", "correo", "departamento",
+                "distrito", "residencial", user.Id);
         }
         catch (Exception e)
         {
@@ -40,14 +51,15 @@ public class UserCommandService : IUserCommandService
         }
     }
 
-    public async Task<User> Handle(SignInCommand command)
+    public async Task<(User user, string token)> Handle(SignInCommand command)
     {
         var user = await _userRepository.FindByUsername(command.Username);
-        if (user==null || user.Password!=command.Password)
+        if (user==null || !_hashingService.VerifyPassword(command.Password,user.Password))
         {
             throw new Exception("Invalid username or password");
         }
 
-        return user;
+        var token = _tokenService.GenerateToken(user);
+        return (user,token);
     }
 }
