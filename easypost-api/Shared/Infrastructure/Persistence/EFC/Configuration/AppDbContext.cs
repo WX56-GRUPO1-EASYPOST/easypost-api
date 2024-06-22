@@ -99,6 +99,12 @@ public class AppDbContext : DbContext
             .HasForeignKey(t => t.LocationId)
             .HasPrincipalKey(t => t.Id);
 
+        builder.Entity<Location>()
+            .HasMany(l => l.Requests)
+            .WithOne(r => r.Location)
+            .HasForeignKey(r => r.LocationId)
+            .HasPrincipalKey(l => l.Id);
+
         // Material Bounded Context
         
         builder.Entity<Material>().HasKey(c => c.Id);
@@ -190,14 +196,28 @@ public class AppDbContext : DbContext
                 builder.Entity<Request>().Property(r => r.ProjectId).IsRequired();
                 builder.Entity<Request>().Property(r => r.Description).IsRequired();
                 builder.Entity<Request>().Property(r => r.Status).IsRequired();
-                builder.Entity<Request>().Property(r => r.Date).IsRequired();
+                builder.Entity<Request>().Property(r => r.Deadline).IsRequired();
 
+                builder.Entity<Request>().OwnsOne(r => r.Description,
+                    d =>
+                    {
+                        d.WithOwner().HasForeignKey("Id");
+                        d.Property(r => r.Description).HasColumnName("Description");
+                        d.Property(r => r.Budget).HasColumnName("Budget");
+                    });
+
+                /*builder.Entity<Location>()
+                    .HasOne(l => l.Request)
+                    .WithOne(r => r.Location)
+                    .HasForeignKey<Request>(r => r.LocationId);*/
+                
+                //builder.Entity<Profile>()
                 // Convertir RequestDescription a un tipo compatible con la base de datos
-                builder.Entity<Request>()
+                /*builder.Entity<Request>()
                     .Property(r => r.Description)
                     .HasConversion(
                         v => v.Description, // Convertir a string al guardar en la base de datos
-                        v => new RequestDescription(v)); // Convertir a RequestDescription al leer de la base de datos
+                        v => new RequestDescription(v));*/ // Convertir a RequestDescription al leer de la base de datos
 
         builder.UseSnakeCaseWithPluralizedTableNamingConvention();
     }

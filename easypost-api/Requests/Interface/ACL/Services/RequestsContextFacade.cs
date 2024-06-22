@@ -14,7 +14,7 @@ public class RequestsContextFacade: IRequestsContextFacade
         _requestCommandService = requestCommandService;
     }
     
-    public async Task<int> CreateRequest(string description, RequestStatus status, int projectId)
+    public async Task<int> CreateRequest(string description, ERequestStatus status, int projectId)
     {
         var command = new CreateRequestCommand( description, status,projectId);
         var request = await _requestCommandService.Handle(command);
