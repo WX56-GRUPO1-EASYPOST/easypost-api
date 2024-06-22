@@ -13,10 +13,12 @@ namespace easypost_api.Requests.Interface.REST;
 public class RequestsController(IRequestCommandService requestCommandService, IRequestQueryService requestQueryService) : ControllerBase
 {
     [HttpPost]
-    public async Task<IActionResult> CreateRequest(CreateRequestResource resource)
+    public async Task<IActionResult> CreateRequest(CreateRequestByFormResource resource)
     {
-        var createRequestCommand = CreateRequestCommandFromResourceAssembler.ToCommandFromResource(resource);
-        var request = await requestCommandService.Handle(createRequestCommand);
+        //var createRequestCommand = CreateRequestCommandFromResourceAssembler.ToCommandFromResource(resource);
+        var createRequestByFormCommand =
+            CreateRequestByFormCommandFromResourceAssembler.ToCommandFromResource(resource);
+        var request = await requestCommandService.Handle(createRequestByFormCommand);
         if (request is null) return BadRequest();
         var requestResource = RequestResourceFromEntityAssembler.ToResourceFromEntity(request);
         return CreatedAtAction(nameof(GetRequestById), new { requestId = request.Id }, requestResource);

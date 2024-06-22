@@ -21,6 +21,8 @@ using easypost_api.IAM.Domain.Services;
 using easypost_api.IAM.Infrastructurre.Persistence.EFC.Repositories;
 using easypost_api.IAM.Interfaces.ACL;
 using easypost_api.IAM.Interfaces.ACL.Services;
+using easypost_api.ManageProject.Interfaces.ACL;
+using easypost_api.ManageProject.Interfaces.ACL.Services;
 using easypost_api.Profiles.Application.Internal.CommandServices;
 using easypost_api.Profiles.Application.Internal.QueryServices;
 using easypost_api.Profiles.Domain.Repositories;
@@ -42,8 +44,6 @@ using easypost_api.Requests.Application.Internal.QueryServices;
 using easypost_api.Requests.Domain.Repositories;
 using easypost_api.Requests.Domain.Services;
 using easypost_api.Requests.Infrastructure.Persistence.EFC.Repositories;
-using easypost_api.Requests.Interface.ACL;
-using easypost_api.Requests.Interface.ACL.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -118,6 +118,7 @@ builder.Services.AddScoped<IProjectCommandService, ProjectCommandService>();
 builder.Services.AddScoped<ILocationRepository, LocationRepository>();
 builder.Services.AddScoped<ILocationQueryService, LocationQueryService>();
 builder.Services.AddScoped<ILocationCommandService, LocationCommandService>();
+builder.Services.AddScoped<ILocationContextFacade, LocationContextFacade>();
 
 // Material Bounded Context Injection Configuration
 
@@ -127,6 +128,7 @@ builder.Services.AddScoped<IMaterialCommandService, MaterialCommandService>();
 builder.Services.AddScoped<IProjectMaterialRepository, ProjectMaterialsRepository>();
 builder.Services.AddScoped<IProjectMaterialsQueryService, ProjectMaterialsQueryService>();
 builder.Services.AddScoped<IProjectMaterialsCommandService, ProjectMaterialsCommandService>();
+builder.Services.AddScoped<IProjectContextFacade, ProjectContextFacade>();
 
 // Pole Bounded Context Injection Configuration
 
@@ -161,7 +163,7 @@ builder.Services.AddScoped<IUserQueryService,UserQueryService>();
 builder.Services.AddScoped<IRequestRepository, RequestRepository>();
 builder.Services.AddScoped<IRequestCommandService, RequestCommandService>();
 builder.Services.AddScoped<IRequestQueryService, RequestQueryService>();
-builder.Services.AddScoped<IRequestsContextFacade, RequestsContextFacade>();
+//builder.Services.AddScoped<IRequestsContextFacade, RequestsContextFacade>();
 
 // Bounded Context "Tickets" Injection Configuration
 builder.Services.AddScoped<ITicketRepository,TicketRepository>();
