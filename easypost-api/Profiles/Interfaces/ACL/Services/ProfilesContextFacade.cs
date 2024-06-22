@@ -1,3 +1,4 @@
+using easypost_api.Profiles.Domain.Model.Aggregates;
 using easypost_api.Profiles.Domain.Model.Commands;
 using easypost_api.Profiles.Domain.Model.Queries;
 using easypost_api.Profiles.Domain.Services;
@@ -34,5 +35,23 @@ public class ProfilesContextFacade : IProfilesContextFacade
     {
         var query = new ExistProfileByIdQuery(profileId);
         return _profileQueryService.Handle(query);
+    }
+
+    public async Task<Profile?> GetProfileById(int profileId)
+    {
+        var query = new ExistProfileByIdQuery(profileId);
+        if (!_profileQueryService.Handle(query))
+        {
+            return null;
+        }
+
+        var getProfileByIdQuery = new GetProfileByIdQuery(profileId);
+        var profile = await _profileQueryService.Handle(getProfileByIdQuery);
+        if (profile==null)
+        {
+            return null;
+        }
+
+        return profile;
     }
 }

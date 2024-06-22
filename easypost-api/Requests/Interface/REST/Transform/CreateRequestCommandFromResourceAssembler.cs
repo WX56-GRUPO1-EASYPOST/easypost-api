@@ -7,6 +7,8 @@ public class CreateRequestCommandFromResourceAssembler
 {
     public static CreateRequestCommand ToCommandFromResource(CreateRequestResource resource)
     {
-        return new CreateRequestCommand(resource.Description, resource.Status, resource.ProjectId);
+        return new CreateRequestCommand(resource.Description, resource.Budget,
+            resource.ProjectId,resource.ClientId,resource.EnterpriseId,
+            resource.LocationId,resource.Deadline);
     }
 }

@@ -7,6 +7,9 @@ public class RequestResourceFromEntityAssembler
 {
     public static RequestResource ToResourceFromEntity(Request entity)
     {
-        return new RequestResource(entity.Id, entity.DescriptionText, entity.Status.ToString(), entity.ProjectId);
+        return new RequestResource(
+            entity.Id, entity.DescriptionText, entity.Status.ToString(),
+            entity.ProjectId,entity.EnterpriseId,entity.ClientId,
+            entity.Deadline.ToString("G"),entity.LocationId);
     }
 }

@@ -98,13 +98,7 @@ public class AppDbContext : DbContext
             .WithOne(t => t.Location)
             .HasForeignKey(t => t.LocationId)
             .HasPrincipalKey(t => t.Id);
-
-        builder.Entity<Location>()
-            .HasMany(l => l.Requests)
-            .WithOne(r => r.Location)
-            .HasForeignKey(r => r.LocationId)
-            .HasPrincipalKey(l => l.Id);
-
+        
         // Material Bounded Context
         
         builder.Entity<Material>().HasKey(c => c.Id);
@@ -182,35 +176,54 @@ public class AppDbContext : DbContext
         builder.Entity<User>().Property(u => u.Type).IsRequired();
 
         // Tickets Context
-                builder.Entity<Ticket>().HasKey(t => t.Id);
-                builder.Entity<Ticket>().Property(t => t.Id).IsRequired().ValueGeneratedOnAdd();
-                builder.Entity<Ticket>().Property(t => t.Title).IsRequired();
-                builder.Entity<Ticket>().Property(t => t.Description).IsRequired();
-                builder.Entity<Ticket>().Property(t => t.Category).IsRequired();
-                builder.Entity<Ticket>().Property(t => t.Priority).IsRequired();
-                builder.Entity<Ticket>().Property(t => t.ProfileId).IsRequired();
+        builder.Entity<Ticket>().HasKey(t => t.Id);
+        builder.Entity<Ticket>().Property(t => t.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<Ticket>().Property(t => t.Title).IsRequired();
+        builder.Entity<Ticket>().Property(t => t.Description).IsRequired();
+        builder.Entity<Ticket>().Property(t => t.Category).IsRequired();
+        builder.Entity<Ticket>().Property(t => t.Priority).IsRequired();
+        builder.Entity<Ticket>().Property(t => t.ProfileId).IsRequired();
 
         // Requests Context
-                builder.Entity<Request>().HasKey(r => r.Id);
-                builder.Entity<Request>().Property(r => r.Id).IsRequired().ValueGeneratedOnAdd();
-                builder.Entity<Request>().Property(r => r.ProjectId).IsRequired();
-                builder.Entity<Request>().Property(r => r.Description).IsRequired();
-                builder.Entity<Request>().Property(r => r.Status).IsRequired();
-                builder.Entity<Request>().Property(r => r.Deadline).IsRequired();
+        builder.Entity<Request>().HasKey(r => r.Id);
+        builder.Entity<Request>().Property(r => r.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<Request>().Property(r => r.ProjectId).IsRequired();
+        builder.Entity<Request>().Property(r => r.Status).IsRequired();
+        builder.Entity<Request>().Property(r => r.Deadline).IsRequired();
 
-                builder.Entity<Request>().OwnsOne(r => r.Description,
-                    d =>
-                    {
-                        d.WithOwner().HasForeignKey("Id");
-                        d.Property(r => r.Description).HasColumnName("Description");
-                        d.Property(r => r.Budget).HasColumnName("Budget");
-                    });
+        builder.Entity<Request>().OwnsOne(r => r.Description,
+            d =>
+            {
+                d.WithOwner().HasForeignKey("Id");
+                d.Property(r => r.Description).HasColumnName("Description");
+                d.Property(r => r.Budget).HasColumnName("Budget");
+            });
+        
+        builder.Entity<Location>()
+            .HasMany(l => l.Requests)
+            .WithOne(r => r.Location)
+            .HasForeignKey(r => r.LocationId)
+            .HasPrincipalKey(l => l.Id);
 
-                /*builder.Entity<Location>()
-                    .HasOne(l => l.Request)
-                    .WithOne(r => r.Location)
-                    .HasForeignKey<Request>(r => r.LocationId);*/
-                
+        builder.Entity<Profile>()
+            .HasMany(p => p.EnterpriseRequests)
+            .WithOne(r => r.Enterprise)
+            .HasForeignKey(r => r.EnterpriseId)
+            .HasPrincipalKey(p => p.Id);
+        
+        builder.Entity<Profile>()
+            .HasMany(p => p.ClientRequests)
+            .WithOne(r => r.Client)
+            .HasForeignKey(r => r.ClientId)
+            .HasPrincipalKey(p => p.Id);
+        
+        builder.Entity<Project>()
+            .HasMany(p => p.Requests)
+            .WithOne(r => r.Project)
+            .HasForeignKey(r => r.ProjectId)
+            .HasPrincipalKey(p => p.Id);
+
+        
                 //builder.Entity<Profile>()
                 // Convertir RequestDescription a un tipo compatible con la base de datos
                 /*builder.Entity<Request>()

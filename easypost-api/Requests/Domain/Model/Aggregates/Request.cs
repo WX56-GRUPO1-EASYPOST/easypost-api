@@ -24,33 +24,33 @@ public partial class Request
     public string DescriptionText => Description.DescriptionText;
     public Request()
     {
-        this.Id = 0;
-        this.ProjectId = 0;
-        this.Description = new RequestDescription();
-        this.Status = ERequestStatus.Pending;
     }
-    public Request(int projectId, string requestDescription, ERequestStatus eRequestStatus
-        , DateTime requestDate, string budget)
+    public Request(int projectId, string requestDescription, string budget, ERequestStatus status
+        , DateTime deadline, int clientId, int enterpriseId, int locationId )
     {
-        //this.Id = requestId;
         this.ProjectId = projectId;
         this.Description = new RequestDescription(requestDescription,budget);
-        this.Status = eRequestStatus;
-        this.Deadline = requestDate;
+        this.Status = status;
+        this.Deadline = deadline;
+        this.EnterpriseId = enterpriseId;
+        this.ClientId = clientId;
+        this.LocationId = locationId;
     }
 
     public Request(CreateRequestCommand command)
     {
-        //this.Id = 0;
         this.ProjectId = command.ProjectId;
-        this.Description = new RequestDescription(command.Description);
+        this.Description = new RequestDescription(command.Description,command.Budget);
         this.Status = ERequestStatus.Pending;
-        this.Deadline = DateTime.Now;
+        this.Deadline = command.Deadline;
+        this.LocationId = command.LocationId;
+        this.ClientId = command.ClientId;
+        this.EnterpriseId = command.EnterpriseId;
     }
     // Método para actualizar la descripción de la solicitud
-    public void UpdateDescription(string newDescription)
+    public void UpdateDescription(string newDescription,string budget)
     {
-        this.Description = new RequestDescription(newDescription);
+        this.Description = new RequestDescription(newDescription,budget);
     }
 
     // Método para actualizar el estado de la solicitud
