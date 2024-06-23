@@ -205,8 +205,7 @@ public class AppDbContext : DbContext
         // Message Context
         builder.Entity<MessageEntity>().HasKey(m => m.Id);
         builder.Entity<MessageEntity>().Property(m => m.Id).IsRequired().ValueGeneratedOnAdd();
-        builder.Entity<MessageEntity>().Property(m => m.Subject).IsRequired();
-        builder.Entity<MessageEntity>().Property(m => m.EmailBody).IsRequired();
+        builder.Entity<MessageEntity>().Property(m => m.Text).IsRequired();
 
         builder.Entity<User>()
             .HasMany(u => u.RecipientMessages)

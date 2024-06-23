@@ -7,8 +7,7 @@ namespace easypost_api.Message.Domain.Model.Aggregates;
 public class MessageEntity
 {
     public int Id { get; }
-    public string Subject { get; private set; }
-    public string EmailBody { get; private set;  }
+    public string Text { get; private set;  }
     public int RecipientId { get; set; }
     public User Recipient { get; private set; }
     public int SenderId { get; set; }
@@ -22,8 +21,7 @@ public class MessageEntity
 
     public MessageEntity(CreateMessageCommand command)
     {
-        this.Subject = command.Subject;
-        this.EmailBody = command.EmailBody;
+        this.Text = command.Text;
         this.RecipientId = command.RecipientId;
         this.SenderId = command.SenderId;
         this.SentTime = DateTime.Now;

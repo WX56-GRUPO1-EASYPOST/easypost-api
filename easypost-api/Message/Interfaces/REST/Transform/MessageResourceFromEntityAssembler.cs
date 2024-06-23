@@ -7,7 +7,7 @@ public static class MessageResourceFromEntityAssembler
 {
     public static MessageResource ToResourceFromEntity(MessageEntity entity)
     {
-        return new MessageResource(entity.Id, entity.Subject, entity.EmailBody,
+        return new MessageResource(entity.Id, entity.Text,
             entity.RecipientId, entity.SenderId, entity.SentTime.ToString("G"));
     }
 }

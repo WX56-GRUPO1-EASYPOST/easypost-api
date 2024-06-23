@@ -7,6 +7,6 @@ public static class CreateMessageCommandFromResourceAssembler
 {
     public static CreateMessageCommand ToCommandFromResource(CreateMessageResource resource)
     {
-        return new CreateMessageCommand(resource.Subject, resource.EmailBody, resource.RecipientId, resource.SenderId);
+        return new CreateMessageCommand(resource.Text, resource.RecipientId, resource.SenderId);
     }
 }
