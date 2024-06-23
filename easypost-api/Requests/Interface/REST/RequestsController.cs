@@ -1,5 +1,7 @@
 using System.Net.Mime;
+using easypost_api.Requests.Domain.Model.Commands;
 using easypost_api.Requests.Domain.Model.Queries;
+using easypost_api.Requests.Domain.Model.ValueObjects;
 using easypost_api.Requests.Domain.Services;
 using easypost_api.Requests.Interface.REST.Resources;
 using easypost_api.Requests.Interface.REST.Transform;
@@ -40,5 +42,35 @@ public class RequestsController(IRequestCommandService requestCommandService, IR
         var requests = await requestQueryService.Handle(getAllRequestsQuery);
         var resources = requests.Select(RequestResourceFromEntityAssembler.ToResourceFromEntity);
         return Ok(resources);
+    }
+
+    [HttpGet("enterprise/filter")]
+    public async Task<IActionResult> GetAllRequestsByEnterpriseIdAndStatus([FromQuery] int enterpriseId,
+        [FromQuery] ERequestStatus status)
+    {
+        var query = new GetAllRequestsByEnterpriseIdAndStatusQuery(enterpriseId, status);
+        var requests = await requestQueryService.Handle(query);
+        var resources = requests.Select(RequestResourceFromEntityAssembler.ToResourceFromEntity);
+        return Ok(resources);
+    }
+    
+    [HttpGet("client/filter")]
+    public async Task<IActionResult> GetAllRequestsByClientIdAndStatus([FromQuery] int clientId,
+        [FromQuery] ERequestStatus status)
+    {
+        var query = new GetAllRequestsByClientIdAndStatusQuery(clientId, status);
+        var requests = await requestQueryService.Handle(query);
+        var resources = requests.Select(RequestResourceFromEntityAssembler.ToResourceFromEntity);
+        return Ok(resources);
+    }
+
+    [HttpPatch("{requestId:int}/update-status")]
+    public async Task<IActionResult> UpdateRequestStatus(int requestId,[FromQuery] ERequestStatus status)
+    {
+        var query = new UpdateRequestStatusCommand(requestId, status);
+        var request = await requestCommandService.Handle(query);
+        if (request is null) return BadRequest();
+        var resource = RequestResourceFromEntityAssembler.ToResourceFromEntity(request);
+        return Ok(resource);
     }
 }

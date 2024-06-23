@@ -84,14 +84,27 @@ public class RequestCommandService: IRequestCommandService
             return null;
         }
         //
-        var project = await _projectContextFacade.GetProjectById(projectId.Value);
+        /*var project = await _projectContextFacade.GetProjectById(projectId.Value);
         var location = await _locationContextFacade.GetLocationById(locationId.Value);
 
         request.Project = project;
         request.Location = location;
         request.Client = client;
-        request.Enterprise = enterprise;
+        request.Enterprise = enterprise;*/
         
+        return request;
+    }
+
+    public async Task<Request?> Handle(UpdateRequestStatusCommand command)
+    {
+        var request = await _requestRepository.FindByIdAsync(command.RequestId);
+        if (request is null)
+        {
+            return null;
+        }
+        request.UpdateStatus(command.Status);
+        _requestRepository.Update(request);
+        await _unitOfWork.CompleteAsync();
         return request;
     }
 }

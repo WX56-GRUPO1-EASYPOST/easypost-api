@@ -7,4 +7,5 @@ public interface IRequestCommandService
 {
     Task<Request?> Handle(CreateRequestCommand command);
     Task<Request?> Handle(CreateRequestByFormCommand command);
+    Task<Request?> Handle(UpdateRequestStatusCommand command);
 }

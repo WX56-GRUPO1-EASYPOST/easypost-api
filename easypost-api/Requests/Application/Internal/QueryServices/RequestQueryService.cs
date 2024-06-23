@@ -25,4 +25,14 @@ public class RequestQueryService : IRequestQueryService
     {
         return await _requestRepository.ListAsync();
     }
+
+    public async Task<IEnumerable<Request>> Handle(GetAllRequestsByEnterpriseIdAndStatusQuery query)
+    {
+        return await _requestRepository.FindAllByEnterpriseIdAndStatus(query.EnterpriseId, query.Status);
+    }
+
+    public async Task<IEnumerable<Request>> Handle(GetAllRequestsByClientIdAndStatusQuery query)
+    {
+        return await _requestRepository.FindAllByClientIdAndStatus(query.ClientId, query.Status);
+    }
 }

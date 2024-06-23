@@ -7,4 +7,6 @@ public interface IRequestQueryService
 {
     Task<Request?> Handle(GetRequestByIdQuery query);
     Task<IEnumerable<Request>> Handle(GetAllRequestsQuery query);
+    Task<IEnumerable<Request>> Handle(GetAllRequestsByEnterpriseIdAndStatusQuery query);
+    Task<IEnumerable<Request>> Handle(GetAllRequestsByClientIdAndStatusQuery query);
 }
