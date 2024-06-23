@@ -15,7 +15,6 @@ public class RequestsController(IRequestCommandService requestCommandService, IR
     [HttpPost]
     public async Task<IActionResult> CreateRequest(CreateRequestByFormResource resource)
     {
-        //var createRequestCommand = CreateRequestCommandFromResourceAssembler.ToCommandFromResource(resource);
         var createRequestByFormCommand =
             CreateRequestByFormCommandFromResourceAssembler.ToCommandFromResource(resource);
         var request = await requestCommandService.Handle(createRequestByFormCommand);

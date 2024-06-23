@@ -45,17 +45,53 @@ public class RequestCommandService: IRequestCommandService
     public async Task<Request?> Handle(CreateRequestByFormCommand command)
     {
         // llamar a facade Profile para validar si existen los clientId y EnterpriseId
+        if (!_profilesContextFacade.ExistsProfileById(command.ClientId) ||
+            !_profilesContextFacade.ExistsProfileById(command.EnterpriseId))
+        {
+            return null;
+        }
         
         //llamar a facade location para crear, y retornar Id de location
+        var locationId = await _locationContextFacade.CreateLocation(command.Department,
+            command.Province, command.District, command.Locality, command.Address, command.Reference);
+        if (locationId == 0)
+        {
+            return null;
+        }
         
         //llamar a facade project para crear y retornar Id de Project
+        var projectId = await _projectContextFacade.CreateProject(command.ProjectTitle,command.Budget,
+            command.PartialBudget,locationId.Value);
+        if (projectId==0)
+        {
+            return null;
+        }
         
         //llamar a facade de Profile para retornar Entidad Profile de Cliente y Empresa
+        var client = await _profilesContextFacade.GetProfileById(command.ClientId);
+        var enterprise = await _profilesContextFacade.GetProfileById(command.EnterpriseId);
+        if (client==null || enterprise==null)
+        {
+            return null;
+        }
         
         //var createRequestCommand = new CreateRequestCommnad(meter todos los datos necesarios);
+        var createRequestCommand = new CreateRequestCommand(command.Description, command.Budget.ToString(),
+            projectId.Value, client.Id, enterprise.Id, locationId.Value, command.Deadline);
+        var request = await this.Handle(createRequestCommand);
+        if (request==null)
+        {
+            return null;
+        }
+        //
+        var project = await _projectContextFacade.GetProjectById(projectId.Value);
+        var location = await _locationContextFacade.GetLocationById(locationId.Value);
+
+        request.Project = project;
+        request.Location = location;
+        request.Client = client;
+        request.Enterprise = enterprise;
         
-        //var request = await this.Handle(createRequestCommand);
-        //if(request == null) return null;
-        //return request;
+        return request;
     }
 }

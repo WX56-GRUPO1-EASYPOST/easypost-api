@@ -1,8 +1,8 @@
 namespace easypost_api.Requests.Domain.Model.Commands;
 
 public record CreateRequestByFormCommand(
-    string Description, string Budget,
+    string Description, long Budget,
     int ClientId, int EnterpriseId, DateTime Deadline,
     string Department, string Province, string District, string Address,
     string Locality, string Reference,
-    string ProjectTitle, string PartialBudget);
+    string ProjectTitle, long PartialBudget);

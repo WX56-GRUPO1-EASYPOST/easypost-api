@@ -10,16 +10,16 @@ public partial class Request
 {
     public int Id { get; set; }
     public int ProjectId { get; set; }
-    public Project Project { get; set; }
+    public Project Project { get; internal set; }
     public RequestDescription Description { get; set; }
     public ERequestStatus Status { get; set; }
     public DateTime Deadline { get; set; }
     public int ClientId { get; set; }
-    public Profile Client { get; set; }
+    public Profile Client { get; internal set; }
     public int EnterpriseId { get; set; }
-    public Profile Enterprise { get; set; }
+    public Profile Enterprise { get; internal set; }
     public int LocationId { get; set; }
-    public Location Location { get; set; }
+    public Location Location { get; internal set; }
 
     public string DescriptionText => Description.DescriptionText;
     public Request()
