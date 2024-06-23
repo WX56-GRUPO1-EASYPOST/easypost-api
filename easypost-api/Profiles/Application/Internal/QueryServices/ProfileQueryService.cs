@@ -48,4 +48,16 @@ public class ProfileQueryService : IProfileQueryService
 
         return profile;
     }
+
+    public async Task<IEnumerable<Profile>> Handle(GetAllEnterpriseProfilesQuery query)
+    {
+        var profiles = await this.Handle(new GetAllProfilesQuery());
+        if (!profiles.Any())
+        {
+            return Enumerable.Empty<Profile>();
+        }
+        var enterpriseProfiles = profiles
+            .Where(profile =>_userContextFacade.IsEnterprise(profile.UserId).Result == true);
+        return enterpriseProfiles;
+    }
 }

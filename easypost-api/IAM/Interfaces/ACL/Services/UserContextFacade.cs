@@ -12,4 +12,19 @@ public class UserContextFacade(IUserQueryService userQueryService):IUserContextF
         if (user == null) return false;
         return true;
     }
+
+    public async Task<bool> IsEnterprise(int userId)
+    {
+        var getUserByIdQuery = new GetUserByIdQuery(userId);
+        var user = await userQueryService.Handle(getUserByIdQuery);
+        if (user == null) throw new Exception();
+        if (user.Type == 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }
