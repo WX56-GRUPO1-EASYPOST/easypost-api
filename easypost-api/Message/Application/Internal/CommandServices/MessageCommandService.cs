@@ -1,14 +1,16 @@
+using easypost_api.Message.Domain.Model.Aggregates;
 using easypost_api.Message.Domain.Model.Commands;
 using easypost_api.Message.Domain.Repositories;
+using easypost_api.Message.Domain.Services;
 using easypost_api.Shared.Domain.Repositories;
 
 namespace easypost_api.Message.Application.Internal.CommandServices;
 
-public class MessageCommandService(MessageRepository messageRepository,IUnitOfWork unitOfWork): Domain.Services.MessageCommandService
+public class MessageCommandService(IMessageRepository messageRepository,IUnitOfWork unitOfWork): IMessageCommandService
 {
-    public async Task<Domain.Model.Aggregates.Message?> Handle(CreateMessageCommand command)
+    public async Task<MessageEntity?> Handle(CreateMessageCommand command)
     {
-        var message = new Domain.Model.Aggregates.Message(command);
+        var message = new MessageEntity(command);
         try
         {
             await messageRepository.AddAsync(message);

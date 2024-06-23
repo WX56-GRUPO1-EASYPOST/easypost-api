@@ -1,11 +1,12 @@
+using easypost_api.Message.Domain.Model.Aggregates;
 using easypost_api.Message.Domain.Model.Queries;
 using easypost_api.Message.Domain.Repositories;
 
 namespace easypost_api.Message.Application.Internal.QueryServices;
 
-public class MessageQueryService(MessageRepository messageRepository): Domain.Services.MessageQueryService
+public class MessageQueryService(IMessageRepository messageRepository): Domain.Services.IMessageQueryService
 {
-    public async Task<Domain.Model.Aggregates.Message?> Handle(GetMessageByIdQuery query)
+    public async Task<MessageEntity?> Handle(GetMessageByIdQuery query)
     {
         return await messageRepository.FindByIdAsync(query.MessageId);
     }

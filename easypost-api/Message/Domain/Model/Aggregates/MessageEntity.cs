@@ -4,30 +4,28 @@ using Microsoft.EntityFrameworkCore;
 
 namespace easypost_api.Message.Domain.Model.Aggregates;
 
-public class Message
+public class MessageEntity
 {
     public int Id { get; }
     public string Subject { get; private set; }
     public string EmailBody { get; private set;  }
+    public int RecipientId { get; set; }
     public User Recipient { get; private set; }
+    public int SenderId { get; set; }
     public User Sender { get; private set; }
     public DateTime SentTime { get; private set; }
 
-    public Message()
+    public MessageEntity()
     {
-        this.Subject = string.Empty;
-        this.EmailBody = string.Empty;
-        this.Recipient = Recipient;
-        this.Sender = Sender;
-        this.SentTime = DateTime.Now;
+        
     }
 
-    public Message(CreateMessageCommand command)
+    public MessageEntity(CreateMessageCommand command)
     {
         this.Subject = command.Subject;
         this.EmailBody = command.EmailBody;
-        this.Recipient = command.Recipient;
-        this.Sender = command.Sender;
+        this.RecipientId = command.RecipientId;
+        this.SenderId = command.SenderId;
         this.SentTime = DateTime.Now;
     }
     

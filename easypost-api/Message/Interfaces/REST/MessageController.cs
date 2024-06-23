@@ -8,10 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace easypost_api.Message.Interfaces.REST;
 
 [ApiController]
-//[Route("api/v1/[controller]")]
-[Route("api/v1/message")]
+[Route("api/v1/[controller]")]
 [Produces(MediaTypeNames.Application.Json)]
-public class MessageController(MessageCommandService messageCommandService, MessageQueryService messageQueryService): ControllerBase
+public class MessageController(IMessageCommandService messageCommandService, IMessageQueryService messageQueryService): ControllerBase
 {
     [HttpPost]
     public async Task<IActionResult> CreateMessage([FromBody] CreateMessageResource resource)
