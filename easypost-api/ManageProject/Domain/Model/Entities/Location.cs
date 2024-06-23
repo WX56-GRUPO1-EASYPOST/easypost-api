@@ -1,4 +1,5 @@
 using easypost_api.ManageProject.Domain.Model.Aggregates;
+using easypost_api.Requests.Domain.Model.Aggregates;
 
 namespace easypost_api.ManageProject.Domain.Model.Entities;
 
@@ -36,4 +37,6 @@ public class Location
     public string Reference { get; private set; }
     
     public ICollection<Project> Projects { get; }
+    
+    public ICollection<Request> Requests { get; set; }
 }

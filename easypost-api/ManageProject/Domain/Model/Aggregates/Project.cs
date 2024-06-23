@@ -1,4 +1,5 @@
 using easypost_api.ManageProject.Domain.Model.Entities;
+using easypost_api.Requests.Domain.Model.Aggregates;
 
 namespace easypost_api.ManageProject.Domain.Model.Aggregates;
 
@@ -33,4 +34,6 @@ public partial class Project
     public int LocationId { get; private set; }    
 
     public ICollection<ProjectMaterials> ProjectMaterials { get; }
+    
+    public ICollection<Request> Requests { get; }
 }

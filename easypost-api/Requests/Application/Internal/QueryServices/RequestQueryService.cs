@@ -1,3 +1,5 @@
+using easypost_api.ManageProject.Interfaces.ACL;
+using easypost_api.Profiles.Interfaces.ACL;
 using easypost_api.Requests.Domain.Model.Aggregates;
 using easypost_api.Requests.Domain.Model.Queries;
 using easypost_api.Requests.Domain.Repositories;
@@ -22,5 +24,15 @@ public class RequestQueryService : IRequestQueryService
     public async Task<IEnumerable<Request>> Handle(GetAllRequestsQuery query)
     {
         return await _requestRepository.ListAsync();
+    }
+
+    public async Task<IEnumerable<Request>> Handle(GetAllRequestsByEnterpriseIdAndStatusQuery query)
+    {
+        return await _requestRepository.FindAllByEnterpriseIdAndStatus(query.EnterpriseId, query.Status);
+    }
+
+    public async Task<IEnumerable<Request>> Handle(GetAllRequestsByClientIdAndStatusQuery query)
+    {
+        return await _requestRepository.FindAllByClientIdAndStatus(query.ClientId, query.Status);
     }
 }
