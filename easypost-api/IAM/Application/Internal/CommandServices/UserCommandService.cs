@@ -41,8 +41,8 @@ public class UserCommandService : IUserCommandService
             await _userRepository.AddAsync(user);
             await _unitOfWork.CompleteAsync();
             
-            await _profilesContextFacade.CreateProfileForUser(user.Username, "description",
-                "ruc", "telefono", "correo", "departamento",
+            await _profilesContextFacade.CreateProfileForUser(command.Name, "description",
+                "ruc", "telefono", user.Username, "departamento",
                 "distrito", "residencial", user.Id);
         }
         catch (Exception e)
