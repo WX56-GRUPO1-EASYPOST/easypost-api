@@ -5,5 +5,5 @@ namespace easypost_api.Message.Domain.Repositories;
 
 public interface IMessageRepository:IBaseRepository<MessageEntity>
 {
-    
+    Task<IEnumerable<MessageEntity>> FindAllByRecipientAndSenderId(int recipientId, int senderId);
 }

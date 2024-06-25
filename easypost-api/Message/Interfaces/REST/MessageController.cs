@@ -40,5 +40,13 @@ public class MessageController(IMessageCommandService messageCommandService, IMe
         return Ok(messageResource);
 
     }
-    
+
+    [HttpGet("recipient/{recipientId:int}")]
+    public async Task<IActionResult> GetAllMessagesByRecipientAndSenderId(int recipientId,[FromQuery] int senderId)
+    {
+        var query = new GetAllMessagesByRecipientAndSenderIdQuery(recipientId,senderId);
+        var messages = await messageQueryService.Handle(query);
+        var resources = messages.Select(MessageResourceFromEntityAssembler.ToResourceFromEntity);
+        return Ok(resources);
+    }
 }
