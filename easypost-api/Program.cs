@@ -21,6 +21,11 @@ using easypost_api.IAM.Domain.Services;
 using easypost_api.IAM.Infrastructurre.Persistence.EFC.Repositories;
 using easypost_api.IAM.Interfaces.ACL;
 using easypost_api.IAM.Interfaces.ACL.Services;
+using easypost_api.Message.Application.Internal.CommandServices;
+using easypost_api.Message.Application.Internal.QueryServices;
+using easypost_api.Message.Domain.Repositories;
+using easypost_api.Message.Domain.Services;
+using easypost_api.Message.Infrastructurre.Persistence.EFC.Repositories;
 using easypost_api.ManageProject.Interfaces.ACL;
 using easypost_api.ManageProject.Interfaces.ACL.Services;
 using easypost_api.Profiles.Application.Internal.CommandServices;
@@ -170,8 +175,10 @@ builder.Services.AddScoped<ITicketRepository,TicketRepository>();
 builder.Services.AddScoped<ITicketCommandService,TicketCommandService>();
 builder.Services.AddScoped<ITicketQueryService,TicketQueryService>();
 
-// ....
-
+// Bounded Context "Messages" Injection Dependency
+builder.Services.AddScoped<IMessageRepository, MessageRepository>();
+builder.Services.AddScoped<IMessageCommandService, MessageCommandService>();
+builder.Services.AddScoped<IMessageQueryService, MessageQueryService>();
 
 var app = builder.Build();
 

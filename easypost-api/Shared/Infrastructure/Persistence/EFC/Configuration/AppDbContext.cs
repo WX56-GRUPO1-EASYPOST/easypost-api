@@ -5,6 +5,7 @@ using easypost_api.ManageProject.Domain.Model.Entities;
 using easypost_api.Poles.Domain.Model.Aggregates;
 using easypost_api.Poles.Domain.Model.Entities;
 using easypost_api.IAM.Domain.Model.Aggregates;
+using easypost_api.Message.Domain.Model.Aggregates;
 using easypost_api.Profiles.Domain.Model.Aggregates;
 using easypost_api.Shared.Infrastructure.Persistence.EFC.Configuration.Extensions;
 using easypost_api.Tickets.Domain.Model.Aggregates;
@@ -32,6 +33,7 @@ public class AppDbContext : DbContext
         base.OnModelCreating(builder);
         
         // Contexts
+        builder.Entity<MessageEntity>().ToTable("Message");
         
         //Profiles Context
         builder.Entity<Profile>().HasKey(p=>p.Id);
@@ -232,6 +234,24 @@ public class AppDbContext : DbContext
                         v => v.Description, // Convertir a string al guardar en la base de datos
                         v => new RequestDescription(v));*/ // Convertir a RequestDescription al leer de la base de datos
 
+        
+        // Message Context
+        builder.Entity<MessageEntity>().HasKey(m => m.Id);
+        builder.Entity<MessageEntity>().Property(m => m.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<MessageEntity>().Property(m => m.Text).IsRequired();
+
+        builder.Entity<User>()
+            .HasMany(u => u.RecipientMessages)
+            .WithOne(m => m.Recipient)
+            .HasForeignKey(m => m.RecipientId)
+            .HasPrincipalKey(u => u.Id);
+
+        builder.Entity<User>()
+            .HasMany(u => u.SenderMessages)
+            .WithOne(m => m.Sender)
+            .HasForeignKey(m => m.SenderId)
+            .HasPrincipalKey(u => u.Id);
+        
         builder.UseSnakeCaseWithPluralizedTableNamingConvention();
     }
 }
