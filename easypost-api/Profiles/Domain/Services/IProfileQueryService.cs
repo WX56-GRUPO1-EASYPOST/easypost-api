@@ -9,4 +9,5 @@ public interface IProfileQueryService
     Task<IEnumerable<Profile>> Handle(GetAllProfilesQuery query);
     bool Handle(ExistProfileByIdQuery query);
     Task<Profile?> Handle(GetProfileByUserIdQuery query);
+    Task<IEnumerable<Profile>> Handle(GetAllEnterpriseProfilesQuery query);
 }

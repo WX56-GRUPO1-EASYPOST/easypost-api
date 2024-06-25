@@ -1,49 +1,60 @@
+using easypost_api.ManageProject.Domain.Model.Aggregates;
+using easypost_api.ManageProject.Domain.Model.Entities;
+using easypost_api.Profiles.Domain.Model.Aggregates;
 using easypost_api.Requests.Domain.Model.Commands;
 using easypost_api.Requests.Domain.Model.ValueObjects;
 
 namespace easypost_api.Requests.Domain.Model.Aggregates;
 
-public class Request
+public partial class Request
 {
     public int Id { get; set; }
     public int ProjectId { get; set; }
+    public Project Project { get; internal set; }
     public RequestDescription Description { get; set; }
-    public RequestStatus Status { get; set; }
-    public DateTime Date { get; set; }
-    
-    public string DescriptionText => Description.DescriptionText();
+    public ERequestStatus Status { get; set; }
+    public DateTime Deadline { get; set; }
+    public int ClientId { get; set; }
+    public Profile Client { get; internal set; }
+    public int EnterpriseId { get; set; }
+    public Profile Enterprise { get; internal set; }
+    public int LocationId { get; set; }
+    public Location Location { get; internal set; }
+
+    public string DescriptionText => Description.DescriptionText;
     public Request()
     {
-        this.Id = 0;
-        this.ProjectId = 0;
-        this.Description = new RequestDescription();
-        this.Status = RequestStatus.PENDING;
     }
-    public Request(int requestId, int projectId, string requestDescription, RequestStatus requestStatus, DateTime requestDate)
+    public Request(int projectId, string requestDescription, string budget, ERequestStatus status
+        , DateTime deadline, int clientId, int enterpriseId, int locationId )
     {
-        this.Id = requestId;
         this.ProjectId = projectId;
-        this.Description = new RequestDescription(requestDescription);
-        this.Status = requestStatus;
-        this.Date = requestDate;
+        this.Description = new RequestDescription(requestDescription,budget);
+        this.Status = status;
+        this.Deadline = deadline;
+        this.EnterpriseId = enterpriseId;
+        this.ClientId = clientId;
+        this.LocationId = locationId;
     }
 
     public Request(CreateRequestCommand command)
     {
-        this.Id = 0;
         this.ProjectId = command.ProjectId;
-        this.Description = new RequestDescription(command.Description);
-        this.Status = RequestStatus.PENDING;
-        this.Date = DateTime.Now;
+        this.Description = new RequestDescription(command.Description,command.Budget);
+        this.Status = ERequestStatus.Pending;
+        this.Deadline = command.Deadline;
+        this.LocationId = command.LocationId;
+        this.ClientId = command.ClientId;
+        this.EnterpriseId = command.EnterpriseId;
     }
     // Método para actualizar la descripción de la solicitud
-    public void UpdateDescription(string newDescription)
+    public void UpdateDescription(string newDescription,string budget)
     {
-        this.Description = new RequestDescription(newDescription);
+        this.Description = new RequestDescription(newDescription,budget);
     }
 
     // Método para actualizar el estado de la solicitud
-    public void UpdateStatus(RequestStatus newStatus)
+    public void UpdateStatus(ERequestStatus newStatus)
     {
         this.Status = newStatus;
     }
@@ -51,12 +62,12 @@ public class Request
     // Método para aprobar la solicitud
     public void Approve()
     {
-        this.Status = RequestStatus.APROVED;
+        this.Status = ERequestStatus.Approved;
     }
 
     // Método para rechazar la solicitud
     public void Reject()
     {
-        this.Status = RequestStatus.REJECTED;
+        this.Status = ERequestStatus.Rejected;
     }
 }

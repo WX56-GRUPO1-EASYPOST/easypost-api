@@ -56,4 +56,13 @@ public class ProfilesController(
         var profileResource = ProfileResourceFromEntityAssembler.ToResourceFromEntity(profile);
         return Ok(profileResource);
     }
+
+    [HttpGet("enterprises")]
+    public async Task<IActionResult> GetAllEnterpriseProfiles()
+    {
+        var query = new GetAllEnterpriseProfilesQuery();
+        var profiles = await profileQueryService.Handle(query);
+        var resources = profiles.Select(ProfileResourceFromEntityAssembler.ToResourceFromEntity);
+        return Ok(resources);
+    }
 }

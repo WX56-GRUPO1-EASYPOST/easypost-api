@@ -100,7 +100,7 @@ public class AppDbContext : DbContext
             .WithOne(t => t.Location)
             .HasForeignKey(t => t.LocationId)
             .HasPrincipalKey(t => t.Id);
-
+        
         // Material Bounded Context
         
         builder.Entity<Material>().HasKey(c => c.Id);
@@ -190,16 +190,49 @@ public class AppDbContext : DbContext
         builder.Entity<Request>().HasKey(r => r.Id);
         builder.Entity<Request>().Property(r => r.Id).IsRequired().ValueGeneratedOnAdd();
         builder.Entity<Request>().Property(r => r.ProjectId).IsRequired();
-        builder.Entity<Request>().Property(r => r.Description).IsRequired();
         builder.Entity<Request>().Property(r => r.Status).IsRequired();
-        builder.Entity<Request>().Property(r => r.Date).IsRequired();
+        builder.Entity<Request>().Property(r => r.Deadline).IsRequired();
 
-        // Convertir RequestDescription a un tipo compatible con la base de datos
-        builder.Entity<Request>()
-            .Property(r => r.Description)
-            .HasConversion(
-                v => v.Description, // Convertir a string al guardar en la base de datos
-                v => new RequestDescription(v)); // Convertir a RequestDescription al leer de la base de datos
+        builder.Entity<Request>().OwnsOne(r => r.Description,
+            d =>
+            {
+                d.WithOwner().HasForeignKey("Id");
+                d.Property(r => r.Description).HasColumnName("Description");
+                d.Property(r => r.Budget).HasColumnName("Budget");
+            });
+        
+        builder.Entity<Location>()
+            .HasMany(l => l.Requests)
+            .WithOne(r => r.Location)
+            .HasForeignKey(r => r.LocationId)
+            .HasPrincipalKey(l => l.Id);
+
+        builder.Entity<Profile>()
+            .HasMany(p => p.EnterpriseRequests)
+            .WithOne(r => r.Enterprise)
+            .HasForeignKey(r => r.EnterpriseId)
+            .HasPrincipalKey(p => p.Id);
+        
+        builder.Entity<Profile>()
+            .HasMany(p => p.ClientRequests)
+            .WithOne(r => r.Client)
+            .HasForeignKey(r => r.ClientId)
+            .HasPrincipalKey(p => p.Id);
+        
+        builder.Entity<Project>()
+            .HasMany(p => p.Requests)
+            .WithOne(r => r.Project)
+            .HasForeignKey(r => r.ProjectId)
+            .HasPrincipalKey(p => p.Id);
+
+        
+                //builder.Entity<Profile>()
+                // Convertir RequestDescription a un tipo compatible con la base de datos
+                /*builder.Entity<Request>()
+                    .Property(r => r.Description)
+                    .HasConversion(
+                        v => v.Description, // Convertir a string al guardar en la base de datos
+                        v => new RequestDescription(v));*/ // Convertir a RequestDescription al leer de la base de datos
 
         
         // Message Context
