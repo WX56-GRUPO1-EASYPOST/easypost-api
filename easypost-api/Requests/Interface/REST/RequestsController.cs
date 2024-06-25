@@ -44,8 +44,8 @@ public class RequestsController(IRequestCommandService requestCommandService, IR
         return Ok(resources);
     }
 
-    [HttpGet("enterprise/filter")]
-    public async Task<IActionResult> GetAllRequestsByEnterpriseIdAndStatus([FromQuery] int enterpriseId,
+    [HttpGet("enterprise/{enterpriseId:int}/filter")]
+    public async Task<IActionResult> GetAllRequestsByEnterpriseIdAndStatus(int enterpriseId,
         [FromQuery] ERequestStatus status)
     {
         var query = new GetAllRequestsByEnterpriseIdAndStatusQuery(enterpriseId, status);
@@ -54,8 +54,8 @@ public class RequestsController(IRequestCommandService requestCommandService, IR
         return Ok(resources);
     }
     
-    [HttpGet("client/filter")]
-    public async Task<IActionResult> GetAllRequestsByClientIdAndStatus([FromQuery] int clientId,
+    [HttpGet("client/{clientId:int}/filter")]
+    public async Task<IActionResult> GetAllRequestsByClientIdAndStatus(int clientId,
         [FromQuery] ERequestStatus status)
     {
         var query = new GetAllRequestsByClientIdAndStatusQuery(clientId, status);
