@@ -15,10 +15,16 @@ using easypost_api.Poles.Domain.Repositories;
 using easypost_api.Poles.Domain.Services;
 using easypost_api.Poles.Infrastructure.Persistence.EFC.Repositories;
 using easypost_api.IAM.Application.Internal.CommandServices;
+using easypost_api.IAM.Application.Internal.OutboundServices;
+using easypost_api.IAM.Application.Internal.OutboundServices.ACL;
+using easypost_api.IAM.Application.Internal.OutboundServices.ACL.Services;
 using easypost_api.IAM.Application.Internal.QueryServices;
 using easypost_api.IAM.Domain.Repositories;
 using easypost_api.IAM.Domain.Services;
-using easypost_api.IAM.Infrastructurre.Persistence.EFC.Repositories;
+using easypost_api.IAM.Infrastructure.Hashing.BCrypt.Services;
+using easypost_api.IAM.Infrastructure.Persistence.EFC.Repositories;
+using easypost_api.IAM.Infrastructure.Tokens.JWT.Configuration;
+using easypost_api.IAM.Infrastructure.Tokens.JWT.Services;
 using easypost_api.IAM.Interfaces.ACL;
 using easypost_api.IAM.Interfaces.ACL.Services;
 using easypost_api.Profiles.Application.Internal.CommandServices;
@@ -137,11 +143,10 @@ builder.Services.AddScoped<IProfileRepository,ProfileRepository>();
 builder.Services.AddScoped<IProfileCommandService,ProfileCommandService>();
 builder.Services.AddScoped<IProfileQueryService,ProfileQueryService>();
 builder.Services.AddScoped<IProfilesContextFacade,ProfilesContextFacade>();
-
+builder.Services.AddScoped<IExternalProfileService, ExternalProfileService>();
 // Bounded Context "Users" Injection Configuration
 
 builder.Services.AddScoped<IUserRepository,UserRepository>();
-builder.Services.AddScoped<IUserContextFacade, UserContextFacade>();
 builder.Services.AddScoped<IUserCommandService,UserCommandService>();
 builder.Services.AddScoped<IUserQueryService,UserQueryService>();
 
@@ -155,7 +160,16 @@ builder.Services.AddScoped<ITicketRepository,TicketRepository>();
 builder.Services.AddScoped<ITicketCommandService,TicketCommandService>();
 builder.Services.AddScoped<ITicketQueryService,TicketQueryService>();
 
-// ....
+
+// TokenSettings Configuration
+
+builder.Services.Configure<TokenSettings>(builder.Configuration.GetSection("TokenSettings"));
+builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IHashingService, HashingService>();
+builder.Services.AddScoped<IIamContextFacade, IamContextFacade>();
+
+// Registrar ExternalIamService
+
 
 
 var app = builder.Build();

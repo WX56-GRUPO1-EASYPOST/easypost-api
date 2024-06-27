@@ -6,8 +6,8 @@ namespace easypost_api.IAM.Interfaces.REST.Transform;
 public static class AuthenticatedUserResourceFromEntityAssembler
 {
     public static AuthenticatedUserResource ToResourceFromEntity(
-        User user)
+        User user, string token)
     {
-        return new AuthenticatedUserResource(user.Id, user.Username,user.Type.ToString());
+        return new AuthenticatedUserResource(user.Id, user.Username, token);
     }
 }

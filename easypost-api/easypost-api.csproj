@@ -22,9 +22,16 @@
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.5" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
         <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.5.0" />
+        <!-- BCrypt Encription related packages -->
+        <PackageReference Include="BCrypt.Net-Next" Version="4.0.3"/>
+        <!-- JSON Web Tokens related packages -->
+        <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.6.0"/>
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.6"/>
+        <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="7.6.0"/>
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Profiles\Application\Internal\OutboundServices\ACL\" />
       <Folder Include="Profiles\Application\Internal\QueryServices\" />
       <Folder Include="Profiles\Interfaces\ACL\" />
       <Folder Include="Profiles\Interfaces\REST\Resources\" />

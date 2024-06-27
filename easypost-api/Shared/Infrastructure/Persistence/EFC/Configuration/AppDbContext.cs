@@ -50,23 +50,18 @@ public class AppDbContext : DbContext
             c =>
             {
                 c.WithOwner().HasForeignKey("Id");
-                c.Property(p => p.Telefono).HasColumnName("PhoneNumber");
-                c.Property(p => p.Correo).HasColumnName("Email");
+                c.Property(p => p.Phone).HasColumnName("PhoneNumber");
+                c.Property(p => p.Email).HasColumnName("Email");
             });
 
         builder.Entity<Profile>().OwnsOne(p => p.Address,
             a =>
             {
                 a.WithOwner().HasForeignKey("Id");
-                a.Property(p => p.Departamento).HasColumnName("Department");
-                a.Property(p => p.Distrito).HasColumnName("District");
+                a.Property(p => p.Department).HasColumnName("Department");
+                a.Property(p => p.District).HasColumnName("District");
                 a.Property(p => p.Residential).HasColumnName("Residential");
             });
-
-        builder.Entity<User>()
-            .HasOne(u => u.Profile)
-            .WithOne(p => p.User)
-            .HasForeignKey<Profile>(p => p.UserId);
         
         // Management Project Bounded Context
         builder.Entity<Location>().HasKey(c => c.Id);
@@ -172,8 +167,12 @@ public class AppDbContext : DbContext
         builder.Entity<User>().HasKey(u => u.Id);
         builder.Entity<User>().Property(u => u.Id).IsRequired().ValueGeneratedOnAdd();
         builder.Entity<User>().Property(u => u.Username).IsRequired();
-        builder.Entity<User>().Property(u => u.Password).IsRequired();
+        builder.Entity<User>().Property(u => u.PasswordHash).IsRequired();
         builder.Entity<User>().Property(u => u.Type).IsRequired();
+        builder.Entity<User>()
+            .HasOne(l => l.Profile)
+            .WithOne()
+            .HasForeignKey<User>(l => l.ProfileId);
 
         // Tickets Context
                 builder.Entity<Ticket>().HasKey(t => t.Id);

@@ -7,6 +7,11 @@ public static class UserResourceFromEntityAssembler
 {
     public static UserResource ToResourceFromEntity(User user)
     {
-        return new UserResource(user.Id, user.Username, user.Type.ToString());
+        return new UserResource(
+            user.Id, 
+            user.Username, 
+            user.Type.ToString(), 
+            user.ProfileId
+            );
     }
 }
