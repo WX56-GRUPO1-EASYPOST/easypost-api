@@ -7,6 +7,7 @@ using easypost_api.IAM.Domain.Model.Commands;
 using easypost_api.IAM.Domain.Model.ValueObjects;
 using easypost_api.IAM.Domain.Repositories;
 using easypost_api.IAM.Domain.Services;
+using easypost_api.Profiles.Domain.Model.ValueObjects;
 
 namespace easypost_api.IAM.Application.Internal.CommandServices;
 
@@ -54,16 +55,6 @@ public class UserCommandService(
      */
     public async Task Handle(SignUpCommand command)
     {
-        var type = command.Type switch
-        {
-            "Client" => EUserType.Client,
-            "Company" => EUserType.Company,
-            _ => EUserType.None
-        };
-
-        if(type == EUserType.None)
-            throw new Exception("Invalid user type");
-        
         if (userRepository.ExistsByUsername(command.Username))
             throw new Exception($"Username {command.Username} is already taken");
         
@@ -77,10 +68,11 @@ public class UserCommandService(
             command.Email,
             command.Department,
             command.District,
-            command.Residential
+            command.Residential,
+            command.Type
         );
         
-        var user = new User(command.Username, hashedPassword, profileId, type);
+        var user = new User(command.Username, hashedPassword, profileId);
         try
         {
             await userRepository.AddAsync(user);

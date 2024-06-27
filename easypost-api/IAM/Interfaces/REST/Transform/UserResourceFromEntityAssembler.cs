@@ -9,8 +9,7 @@ public static class UserResourceFromEntityAssembler
     {
         return new UserResource(
             user.Id, 
-            user.Username, 
-            user.Type.ToString(), 
+            user.Username,
             user.ProfileId
             );
     }

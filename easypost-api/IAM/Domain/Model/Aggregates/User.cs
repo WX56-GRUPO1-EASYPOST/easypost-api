@@ -1,6 +1,7 @@
 using System.Text.Json.Serialization;
 using easypost_api.IAM.Domain.Model.ValueObjects;
 using easypost_api.Profiles.Domain.Model.Aggregates;
+using easypost_api.Profiles.Domain.Model.ValueObjects;
 
 namespace easypost_api.IAM.Domain.Model.Aggregates;
 
@@ -12,10 +13,11 @@ namespace easypost_api.IAM.Domain.Model.Aggregates;
  *     This class is used to represent a user
  * </remarks>
  */
-public class User(string username, string passwordHash, int profileId, EUserType Type)
+public class User(string username, string passwordHash, int profileId)
 {
-    public User() : this(string.Empty, string.Empty, 0, EUserType.Client)
+    public User() : this(string.Empty, string.Empty, 0)
     {
+        
     }
 
     public int Id { get; }
@@ -24,8 +26,6 @@ public class User(string username, string passwordHash, int profileId, EUserType
     public int ProfileId { get; private set; } = profileId;
     
     public Profile Profile { get; private set; } 
-    
-    public EUserType Type { get; private set; } = Type;
 
     [JsonIgnore] public string PasswordHash { get; private set; } = passwordHash;
 
