@@ -1,5 +1,4 @@
-using easypost_api.ManageProject.Interfaces.ACL;
-using easypost_api.Profiles.Interfaces.ACL;
+using easypost_api.Requests.Application.Internal.OutboundServices.ACL;
 using easypost_api.Requests.Domain.Model.Aggregates;
 using easypost_api.Requests.Domain.Model.Commands;
 using easypost_api.Requests.Domain.Repositories;
@@ -11,10 +10,9 @@ namespace easypost_api.Requests.Application.Internal.CommandServices;
 public class RequestCommandService(
     IRequestRepository requestRepository,
     IUnitOfWork unitOfWork,
-    IProfilesContextFacade profilesContextFacade,
-    IProjectContextFacade projectContextFacade,
-    ILocationContextFacade locationContextFacade
-    )
+    IExternalRequestProfileService externalRequestProfileService,
+    IExternalRequestProjectService externalRequestProjectService,
+    IExternalRequestLocationService externalRequestLocationService)
     : IRequestCommandService
 {
     public async Task<Request?> Handle(CreateRequestCommand command)
@@ -34,53 +32,28 @@ public class RequestCommandService(
 
     public async Task<Request?> Handle(CreateRequestByFormCommand command)
     {
-        // llamar a facade Profile para validar si existen los clientId y EnterpriseId
-        if (!profilesContextFacade.ExistsProfileById(command.ClientId) ||
-            !profilesContextFacade.ExistsProfileById(command.EnterpriseId))
+ 
+        if (!externalRequestProfileService.ProfileExists(command.ClientId) || 
+            !externalRequestProfileService.ProfileExists(command.EnterpriseId))
         {
             return null;
         }
         
-        //llamar a facade location para crear, y retornar Id de location
-        var locationId = await locationContextFacade.CreateLocation(command.Department,
-            command.Province, command.District, command.Locality, command.Address, command.Reference);
-        if (locationId == 0)
-        {
-            return null;
-        }
+        var locationId = await externalRequestLocationService.CreateLocation(command.Department, command.Province,
+            command.District, command.Locality,command.Address, command.Reference);
+        if (locationId == 0) return null;
         
-        //llamar a facade project para crear y retornar Id de Project
-        var projectId = await projectContextFacade.CreateProject(command.ProjectTitle,command.Budget,
-            command.PartialBudget,locationId.Value, command.);
-        if (projectId==0)
-        {
-            return null;
-        }
+        var projectId = await externalRequestProjectService.CreateProject(command.ProjectTitle, command.Budget,
+            command.PartialBudget, locationId.Value);
+        if (projectId == 0) return null;
         
-        //llamar a facade de Profile para retornar Entidad Profile de Cliente y Empresa
-        var client = await profilesContextFacade.GetProfileById(command.ClientId);
-        var enterprise = await profilesContextFacade.GetProfileById(command.EnterpriseId);
-        if (client==null || enterprise==null)
-        {
-            return null;
-        }
-        
-        //var createRequestCommand = new CreateRequestCommnad(meter todos los datos necesarios);
         var createRequestCommand = new CreateRequestCommand(command.Description, command.Budget.ToString(),
-            projectId.Value, client.Id, enterprise.Id, locationId.Value, command.Deadline);
+            projectId.Value,command.ClientId, command.EnterpriseId, locationId.Value, command.Deadline);
         var request = await this.Handle(createRequestCommand);
         if (request==null)
         {
             return null;
         }
-        //
-        /*var project = await _projectContextFacade.GetProjectById(projectId.Value);
-        var location = await _locationContextFacade.GetLocationById(locationId.Value);
-
-        request.Project = project;
-        request.Location = location;
-        request.Client = client;
-        request.Enterprise = enterprise;*/
         
         return request;
     }
