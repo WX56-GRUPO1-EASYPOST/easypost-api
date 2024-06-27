@@ -7,5 +7,5 @@ namespace easypost_api.Profiles.Domain.Repositories;
 public interface IProfileRepository : IBaseRepository<Profile>
 {
     bool ExistsById(int profileId);
-    Task<Profile?> FindByUserIdAsync(int userId);
+    Task<Profile?> FindProfileByEmailAsync(string email);
 }

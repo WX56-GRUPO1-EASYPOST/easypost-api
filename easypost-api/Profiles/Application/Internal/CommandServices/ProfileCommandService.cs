@@ -6,23 +6,21 @@ using easypost_api.Shared.Domain.Repositories;
 
 namespace easypost_api.Profiles.Application.Internal.CommandServices;
 
-public class ProfileCommandService: IProfileCommandService
+public class ProfileCommandService(IProfileRepository profileRepository, IUnitOfWork unitOfWork)
+    : IProfileCommandService
 {
-    private readonly IProfileRepository _profileRepository;
-    private readonly IUnitOfWork _unitOfWork;
-
-    public ProfileCommandService(IProfileRepository profileRepository, IUnitOfWork unitOfWork)
-    {
-        _profileRepository = profileRepository;
-        _unitOfWork = unitOfWork;
-    }
     public async Task<Profile?> Handle(CreateProfileCommand command)
     {
+        var profileId = await profileRepository.FindProfileByEmailAsync(command.Email);
+        if( profileId != null)
+        {
+            throw new Exception("Profile already exists");
+        }
         var profile = new Profile(command);
         try
         {
-            await _profileRepository.AddAsync(profile);
-            await _unitOfWork.CompleteAsync();
+            await profileRepository.AddAsync(profile);
+            await unitOfWork.CompleteAsync();
             return profile;
         } catch (Exception e)
         {

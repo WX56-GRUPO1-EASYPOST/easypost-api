@@ -1,0 +1,37 @@
+using easypost_api.Profiles.Interfaces.ACL;
+
+namespace easypost_api.IAM.Application.Internal.OutboundServices.ACL.Services;
+
+public class ExternalProfileService(IProfilesContextFacade profilesContextFacade): IExternalProfileService
+{
+    public async Task<int?> FetchProfileIdByEmail(string email)
+    {
+        var profileId = await profilesContextFacade.FetchProfileIdByEmail(email);
+        if (profileId == 0) return await Task.FromResult<int?>(null);
+        return profileId;
+    }
+
+    public async Task<int> CreateProfile(
+        string name, 
+        string description, 
+        string ruc, 
+        string phone, 
+        string email, 
+        string department, 
+        string district, 
+        string residential)
+    {
+        var profileId = await profilesContextFacade.CreateProfileForUser(
+            name, 
+            description, 
+            ruc, 
+            phone, 
+            email, 
+            department, 
+            district, 
+            residential
+            );
+        if (profileId == 0) return await Task.FromResult<int>(0);
+        return profileId;
+    }
+}
