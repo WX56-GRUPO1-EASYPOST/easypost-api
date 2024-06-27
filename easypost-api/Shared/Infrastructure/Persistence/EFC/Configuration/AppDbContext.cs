@@ -228,31 +228,22 @@ public class AppDbContext : DbContext
             .HasPrincipalKey(p => p.Id);
 
         
-                //builder.Entity<Profile>()
-                // Convertir RequestDescription a un tipo compatible con la base de datos
-                /*builder.Entity<Request>()
-                    .Property(r => r.Description)
-                    .HasConversion(
-                        v => v.Description, // Convertir a string al guardar en la base de datos
-                        v => new RequestDescription(v));*/ // Convertir a RequestDescription al leer de la base de datos
-
-        
         // Message Context
         builder.Entity<MessageEntity>().HasKey(m => m.Id);
         builder.Entity<MessageEntity>().Property(m => m.Id).IsRequired().ValueGeneratedOnAdd();
         builder.Entity<MessageEntity>().Property(m => m.Text).IsRequired();
 
-        builder.Entity<User>()
-            .HasMany(u => u.RecipientMessages)
+        builder.Entity<Profile>()
+            .HasMany(p => p.RecipientMessages)
             .WithOne(m => m.Recipient)
             .HasForeignKey(m => m.RecipientId)
-            .HasPrincipalKey(u => u.Id);
+            .HasPrincipalKey(p => p.Id);
 
-        builder.Entity<User>()
-            .HasMany(u => u.SenderMessages)
+        builder.Entity<Profile>()
+            .HasMany(p => p.SenderMessages)
             .WithOne(m => m.Sender)
             .HasForeignKey(m => m.SenderId)
-            .HasPrincipalKey(u => u.Id);
+            .HasPrincipalKey(p => p.Id);
         
         builder.UseSnakeCaseWithPluralizedTableNamingConvention();
     }
