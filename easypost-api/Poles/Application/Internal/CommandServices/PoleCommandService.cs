@@ -15,8 +15,13 @@ public class PoleCommandService(
 {
     public async Task<Pole?> Handle(CreatePoleCommand command)
     {
-        var GeoReference = new GeoReference(command.Latitude, command.Longitude, command.GeoDescription);
+        var GeoReference = new GeoReference(
+            command.Latitude, 
+            command.Longitude, 
+            command.GeoDescription
+            );
         await geoReferenceRepository.AddAsync(GeoReference);
+        await unitOfWork.CompleteAsync();
         var pole = new Pole(command.Description, command.ProjectId, GeoReference.Id);
         await poleRepository.AddAsync(pole);
         await unitOfWork.CompleteAsync();
