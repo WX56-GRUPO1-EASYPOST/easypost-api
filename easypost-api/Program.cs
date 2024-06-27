@@ -129,6 +129,15 @@ builder.Services.AddSwaggerGen(c =>
 // Configure Lowercase URLs
 builder.Services.AddRouting(options=>options.LowercaseUrls=true);
 
+//CORS 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllPolicy", policy => 
+        policy.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader());
+});
+
 // Configure Dependency Injection
 
 // Shared Bounded Context Injection Configuration
@@ -226,6 +235,8 @@ if (app.Environment.IsDevelopment())
 
 // Add Authorization Middleware to Pipeline
 app.UseRequestAuthorization();
+
+app.UseCors("AllowAllPolicy");
 
 app.UseHttpsRedirection();
 
