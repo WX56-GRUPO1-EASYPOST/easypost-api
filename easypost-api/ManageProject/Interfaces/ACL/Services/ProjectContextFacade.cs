@@ -25,10 +25,6 @@ public class ProjectContextFacade(IProjectCommandService projectCommandService,
     {
         var query = new GetProjectsByIdQuery(projectId);
         var project = await projectQueryService.Handle(query);
-        if (project == null)
-        {
-            return null;
-        }
-        return project;
+        return project ?? null;
     }
 }

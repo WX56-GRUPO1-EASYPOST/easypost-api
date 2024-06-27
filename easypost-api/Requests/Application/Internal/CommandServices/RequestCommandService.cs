@@ -33,8 +33,8 @@ public class RequestCommandService(
     public async Task<Request?> Handle(CreateRequestByFormCommand command)
     {
  
-        if (!externalRequestProfileService.ProfileExists(command.ClientId) || 
-            !externalRequestProfileService.ProfileExists(command.EnterpriseId))
+        if (!externalRequestProfileService.ProfileExists(command.ClientProfileId) || 
+            !externalRequestProfileService.ProfileExists(command.CompanyProfileId))
         {
             return null;
         }
@@ -44,18 +44,13 @@ public class RequestCommandService(
         if (locationId == 0) return null;
         
         var projectId = await externalRequestProjectService.CreateProject(command.ProjectTitle, command.Budget,
-            command.PartialBudget, locationId.Value);
+            command.PartialBudget, locationId.Value, command.CompanyProfileId);
         if (projectId == 0) return null;
         
         var createRequestCommand = new CreateRequestCommand(command.Description, command.Budget.ToString(),
-            projectId.Value,command.ClientId, command.EnterpriseId, locationId.Value, command.Deadline);
+            projectId.Value,command.ClientProfileId, command.CompanyProfileId, locationId.Value, command.Deadline);
         var request = await this.Handle(createRequestCommand);
-        if (request==null)
-        {
-            return null;
-        }
-        
-        return request;
+        return request ?? null;
     }
 
     public async Task<Request?> Handle(UpdateRequestStatusCommand command)

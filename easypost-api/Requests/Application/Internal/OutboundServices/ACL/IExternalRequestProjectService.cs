@@ -6,5 +6,7 @@ public interface IExternalRequestProjectService
         string projectTitle,
         long budget,
         long partialBudget,
-        int locationId);
+        int locationId, 
+        int companyProfileId
+        );
 }

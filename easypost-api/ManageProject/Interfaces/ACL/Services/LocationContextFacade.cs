@@ -20,11 +20,6 @@ public class LocationContextFacade(ILocationCommandService locationCommandServic
     {
         var query = new GetLocationByIdQuery(locationId);
         var location = await locationQueryService.Handle(query);
-        if (location == null)
-        {
-            return null;
-        }
-
-        return location;
+        return location ?? null;
     }
 }
