@@ -1,5 +1,6 @@
 using easypost_api.Poles.Domain.Model.Aggregates;
 using easypost_api.Poles.Domain.Model.Commands;
+using easypost_api.Poles.Domain.Model.Entities;
 using easypost_api.Poles.Domain.Repositories;
 using easypost_api.Poles.Domain.Services;
 using easypost_api.Shared.Domain.Repositories;
@@ -14,10 +15,12 @@ public class PoleCommandService(
 {
     public async Task<Pole?> Handle(CreatePoleCommand command)
     {
-        var pole = new Pole(command.Description, command.ProjectId, command.GeoReferenceId);
+        var GeoReference = new GeoReference(command.Latitude, command.Longitude, command.GeoDescription);
+        await geoReferenceRepository.AddAsync(GeoReference);
+        var pole = new Pole(command.Description, command.ProjectId, GeoReference.Id);
         await poleRepository.AddAsync(pole);
         await unitOfWork.CompleteAsync();
-        var geoReference = await geoReferenceRepository.FindByIdAsync(command.GeoReferenceId);
+        var geoReference = await geoReferenceRepository.FindByIdAsync(GeoReference.Id);
         pole.GeoReference = geoReference;
         return pole;
     }
