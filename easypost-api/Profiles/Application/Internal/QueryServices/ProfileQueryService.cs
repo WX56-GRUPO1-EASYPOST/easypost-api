@@ -10,7 +10,7 @@ namespace easypost_api.Profiles.Application.Internal.QueryServices;
 
 public class ProfileQueryService(
     IProfileRepository profileRepository,
-    IExternalIamService externalIamService
+    IExternalIamProfileService ExternalIamProfileService
     ) : IProfileQueryService
 {
     public async Task<Profile?> Handle(GetProfileByIdQuery query)

@@ -28,6 +28,8 @@ using easypost_api.IAM.Infrastructure.Tokens.JWT.Services;
 using easypost_api.IAM.Interfaces.ACL;
 using easypost_api.IAM.Interfaces.ACL.Services;
 using easypost_api.Profiles.Application.Internal.CommandServices;
+using easypost_api.Profiles.Application.Internal.OutboundServices;
+using easypost_api.Profiles.Application.Internal.OutboundServices.Services;
 using easypost_api.Profiles.Application.Internal.QueryServices;
 using easypost_api.Profiles.Domain.Repositories;
 using easypost_api.Profiles.Domain.Services;
@@ -143,7 +145,6 @@ builder.Services.AddScoped<IProfileRepository,ProfileRepository>();
 builder.Services.AddScoped<IProfileCommandService,ProfileCommandService>();
 builder.Services.AddScoped<IProfileQueryService,ProfileQueryService>();
 builder.Services.AddScoped<IProfilesContextFacade,ProfilesContextFacade>();
-builder.Services.AddScoped<IExternalProfileService, ExternalProfileService>();
 // Bounded Context "Users" Injection Configuration
 
 builder.Services.AddScoped<IUserRepository,UserRepository>();
@@ -168,7 +169,10 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IHashingService, HashingService>();
 builder.Services.AddScoped<IIamContextFacade, IamContextFacade>();
 
-// Registrar ExternalIamService
+// External ACl Injection Configuration
+
+builder.Services.AddScoped<IExternalIamProfileService, ExternalIamProfileService>();
+builder.Services.AddScoped<IExternalProfileIamService, ExternalProfileIamService>();
 
 
 

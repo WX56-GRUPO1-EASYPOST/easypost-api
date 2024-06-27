@@ -2,7 +2,7 @@ using easypost_api.Profiles.Interfaces.ACL;
 
 namespace easypost_api.IAM.Application.Internal.OutboundServices.ACL.Services;
 
-public class ExternalProfileService(IProfilesContextFacade profilesContextFacade): IExternalProfileService
+public class ExternalProfileIamService(IProfilesContextFacade profilesContextFacade): IExternalProfileIamService
 {
     public async Task<int?> FetchProfileIdByEmail(string email)
     {

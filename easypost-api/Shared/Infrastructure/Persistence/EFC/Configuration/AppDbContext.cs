@@ -38,7 +38,7 @@ public class AppDbContext : DbContext
         //Profiles Context
         builder.Entity<Profile>().HasKey(p=>p.Id);
         builder.Entity<Profile>().Property(p=>p.Id).IsRequired().ValueGeneratedOnAdd();
-
+        builder.Entity<Profile>().Property(u => u.Type).IsRequired();
         builder.Entity<Profile>().OwnsOne(p => p.Detail,
             d =>
             {
@@ -174,7 +174,6 @@ public class AppDbContext : DbContext
         builder.Entity<User>().Property(u => u.Id).IsRequired().ValueGeneratedOnAdd();
         builder.Entity<User>().Property(u => u.Username).IsRequired();
         builder.Entity<User>().Property(u => u.PasswordHash).IsRequired();
-        builder.Entity<User>().Property(u => u.Type).IsRequired();
         builder.Entity<User>()
             .HasOne(l => l.Profile)
             .WithOne()

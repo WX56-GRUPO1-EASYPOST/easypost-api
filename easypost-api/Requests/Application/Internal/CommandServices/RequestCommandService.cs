@@ -8,32 +8,22 @@ using easypost_api.Shared.Domain.Repositories;
 
 namespace easypost_api.Requests.Application.Internal.CommandServices;
 
-public class RequestCommandService: IRequestCommandService
+public class RequestCommandService(
+    IRequestRepository requestRepository,
+    IUnitOfWork unitOfWork,
+    IProfilesContextFacade profilesContextFacade,
+    IProjectContextFacade projectContextFacade,
+    ILocationContextFacade locationContextFacade
+    )
+    : IRequestCommandService
 {
-    private readonly IRequestRepository _requestRepository;
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly IProfilesContextFacade _profilesContextFacade;
-    private readonly IProjectContextFacade _projectContextFacade;
-    private readonly ILocationContextFacade _locationContextFacade;
-    
-    public RequestCommandService(IRequestRepository requestRepository, IUnitOfWork unitOfWork,
-        IProfilesContextFacade profilesContextFacade, IProjectContextFacade projectContextFacade,
-        ILocationContextFacade locationContextFacade)
-    {
-        _requestRepository = requestRepository;
-        _unitOfWork = unitOfWork;
-        _profilesContextFacade = profilesContextFacade;
-        _projectContextFacade = projectContextFacade;
-        _locationContextFacade = locationContextFacade;
-    }
-    
     public async Task<Request?> Handle(CreateRequestCommand command)
     {
         var request = new Request(command);
         try
         {
-            await _requestRepository.AddAsync(request);
-            await _unitOfWork.CompleteAsync();
+            await requestRepository.AddAsync(request);
+            await unitOfWork.CompleteAsync();
             return request;
         } catch (Exception e)
         {
@@ -45,14 +35,14 @@ public class RequestCommandService: IRequestCommandService
     public async Task<Request?> Handle(CreateRequestByFormCommand command)
     {
         // llamar a facade Profile para validar si existen los clientId y EnterpriseId
-        if (!_profilesContextFacade.ExistsProfileById(command.ClientId) ||
-            !_profilesContextFacade.ExistsProfileById(command.EnterpriseId))
+        if (!profilesContextFacade.ExistsProfileById(command.ClientId) ||
+            !profilesContextFacade.ExistsProfileById(command.EnterpriseId))
         {
             return null;
         }
         
         //llamar a facade location para crear, y retornar Id de location
-        var locationId = await _locationContextFacade.CreateLocation(command.Department,
+        var locationId = await locationContextFacade.CreateLocation(command.Department,
             command.Province, command.District, command.Locality, command.Address, command.Reference);
         if (locationId == 0)
         {
@@ -60,16 +50,16 @@ public class RequestCommandService: IRequestCommandService
         }
         
         //llamar a facade project para crear y retornar Id de Project
-        var projectId = await _projectContextFacade.CreateProject(command.ProjectTitle,command.Budget,
-            command.PartialBudget,locationId.Value);
+        var projectId = await projectContextFacade.CreateProject(command.ProjectTitle,command.Budget,
+            command.PartialBudget,locationId.Value, command.);
         if (projectId==0)
         {
             return null;
         }
         
         //llamar a facade de Profile para retornar Entidad Profile de Cliente y Empresa
-        var client = await _profilesContextFacade.GetProfileById(command.ClientId);
-        var enterprise = await _profilesContextFacade.GetProfileById(command.EnterpriseId);
+        var client = await profilesContextFacade.GetProfileById(command.ClientId);
+        var enterprise = await profilesContextFacade.GetProfileById(command.EnterpriseId);
         if (client==null || enterprise==null)
         {
             return null;
@@ -97,14 +87,14 @@ public class RequestCommandService: IRequestCommandService
 
     public async Task<Request?> Handle(UpdateRequestStatusCommand command)
     {
-        var request = await _requestRepository.FindByIdAsync(command.RequestId);
+        var request = await requestRepository.FindByIdAsync(command.RequestId);
         if (request is null)
         {
             return null;
         }
         request.UpdateStatus(command.Status);
-        _requestRepository.Update(request);
-        await _unitOfWork.CompleteAsync();
+        requestRepository.Update(request);
+        await unitOfWork.CompleteAsync();
         return request;
     }
 }

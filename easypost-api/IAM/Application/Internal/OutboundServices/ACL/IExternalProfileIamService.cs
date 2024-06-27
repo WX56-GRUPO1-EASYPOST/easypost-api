@@ -1,6 +1,6 @@
 namespace easypost_api.IAM.Application.Internal.OutboundServices.ACL;
 
-public interface IExternalProfileService
+public interface IExternalProfileIamService
 {
     public Task<int> CreateProfile(
         string name,

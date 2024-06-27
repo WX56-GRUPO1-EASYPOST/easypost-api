@@ -21,7 +21,7 @@ namespace easypost_api.IAM.Application.Internal.CommandServices;
  */
 public class UserCommandService(
     IUserRepository userRepository,
-    IExternalProfileService externalProfileService,
+    IExternalProfileIamService ExternalProfileIamService,
     ITokenService tokenService,
     IHashingService hashingService,
     IUnitOfWork unitOfWork)
@@ -60,7 +60,7 @@ public class UserCommandService(
         
         var hashedPassword = hashingService.HashPassword(command.Password);
 
-        var profileId = await externalProfileService.CreateProfile(
+        var profileId = await ExternalProfileIamService.CreateProfile(
             command.Name,
             command.Description,
             command.Ruc,
