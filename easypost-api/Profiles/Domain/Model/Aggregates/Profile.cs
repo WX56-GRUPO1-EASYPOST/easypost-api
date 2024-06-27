@@ -1,7 +1,9 @@
 using easypost_api.IAM.Domain.Model.Aggregates;
+using easypost_api.Message.Domain.Model.Aggregates;
 using easypost_api.Profiles.Domain.Model.Commands;
 using easypost_api.Profiles.domain.model.valueObjects;
 using easypost_api.Profiles.Domain.Model.ValueObjects;
+using easypost_api.Requests.Domain.Model.Aggregates;
 
 namespace easypost_api.Profiles.Domain.Model.Aggregates;
 
@@ -12,11 +14,18 @@ public partial class Profile
     public Details Detail { get; private set; }
     public Contact Contact { get; private set; }
     public Address Address { get; private set; }
+    
+    public ICollection<Request> EnterpriseRequests { get; set; }
+    public ICollection<Request> ClientRequests { get; set; }
+    
+    public ICollection<MessageEntity> RecipientMessages { get; set; }
+    public ICollection<MessageEntity> SenderMessages { get; set; }
 
     public string FullContact => Contact.FullContact;
     public string FullAddress => Address.FullAddress;
     public EUserType Type { get; private set; }
     public string FullDetails => Detail.FullDetails;
+    
 
     public Profile()
     {
