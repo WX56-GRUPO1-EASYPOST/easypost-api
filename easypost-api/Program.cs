@@ -23,6 +23,7 @@ using easypost_api.IAM.Domain.Repositories;
 using easypost_api.IAM.Domain.Services;
 using easypost_api.IAM.Infrastructure.Hashing.BCrypt.Services;
 using easypost_api.IAM.Infrastructure.Persistence.EFC.Repositories;
+using easypost_api.IAM.Infrastructure.Pipeline.Middleware.Extensions;
 using easypost_api.IAM.Infrastructure.Tokens.JWT.Configuration;
 using easypost_api.IAM.Infrastructure.Tokens.JWT.Services;
 using easypost_api.IAM.Interfaces.ACL;
@@ -100,6 +101,29 @@ builder.Services.AddSwaggerGen(c =>
             }
         });
     c.EnableAnnotations();
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Description = "Please enter token",
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        BearerFormat = "JWT",
+        Scheme = "bearer"
+    });
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Id = "Bearer",
+                    Type = ReferenceType.SecurityScheme
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
 });
 
 // Configure Lowercase URLs
@@ -200,35 +224,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+// Add Authorization Middleware to Pipeline
+app.UseRequestAuthorization();
+
 app.UseHttpsRedirection();
-
-/*var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-    {
-        var forecast = Enumerable.Range(1, 5).Select(index =>
-                new WeatherForecast
-                (
-                    DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                    Random.Shared.Next(-20, 55),
-                    summaries[Random.Shared.Next(summaries.Length)]
-                ))
-            .ToArray();
-        return forecast;
-    })
-    .WithName("GetWeatherForecast")
-    .WithOpenApi();*/
 
 app.UseAuthorization();
 
 app.MapControllers();
 
 app.Run();
-
-/*record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}*/
