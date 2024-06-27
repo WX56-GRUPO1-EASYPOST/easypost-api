@@ -9,8 +9,7 @@ using easypost_api.Profiles.Domain.Services;
 namespace easypost_api.Profiles.Application.Internal.QueryServices;
 
 public class ProfileQueryService(
-    IProfileRepository profileRepository,
-    IExternalIamProfileService ExternalIamProfileService
+    IProfileRepository profileRepository
     ) : IProfileQueryService
 {
     public async Task<Profile?> Handle(GetProfileByIdQuery query)

@@ -44,8 +44,8 @@ public partial class Request
         this.Status = ERequestStatus.Pending;
         this.Deadline = command.Deadline;
         this.LocationId = command.LocationId;
-        this.ClientId = command.ClientId;
-        this.EnterpriseId = command.EnterpriseId;
+        this.ClientId = command.ClientProfileId;
+        this.EnterpriseId = command.CompanyProfileId;
     }
     // Método para actualizar la descripción de la solicitud
     public void UpdateDescription(string newDescription,string budget)
