@@ -37,7 +37,7 @@ public class ProfileQueryService(
         var profiles = await this.Handle(new GetAllProfilesQuery());
         if (!profiles.Any())
         {
-            return [];
+            return Enumerable.Empty<Profile>(); // Reemplaza 'Profile' con el tipo correcto
         }
 
         var enterpriseProfiles = profiles
