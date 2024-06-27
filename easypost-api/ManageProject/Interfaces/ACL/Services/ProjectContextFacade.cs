@@ -8,9 +8,15 @@ namespace easypost_api.ManageProject.Interfaces.ACL.Services;
 public class ProjectContextFacade(IProjectCommandService projectCommandService,
     IProjectQueryService projectQueryService):IProjectContextFacade
 {
-    public async Task<int?> CreateProject(string title, long totalBudget, long partialBudget, int locationId)
+    public async Task<int?> CreateProject(
+        string title, 
+        long totalBudget, 
+        long partialBudget, 
+        int locationId,
+        int companyProfileId
+        )
     {
-        var command = new CreateProjectCommand(title, totalBudget, partialBudget, locationId);
+        var command = new CreateProjectCommand(title, totalBudget, partialBudget, locationId, companyProfileId);
         var project = await projectCommandService.Handle(command);
         return project?.Id ?? 0;
     }

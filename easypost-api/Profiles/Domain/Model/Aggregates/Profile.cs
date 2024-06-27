@@ -1,6 +1,7 @@
 using easypost_api.IAM.Domain.Model.Aggregates;
 using easypost_api.Profiles.Domain.Model.Commands;
 using easypost_api.Profiles.domain.model.valueObjects;
+using easypost_api.Profiles.Domain.Model.ValueObjects;
 
 namespace easypost_api.Profiles.Domain.Model.Aggregates;
 
@@ -14,7 +15,7 @@ public partial class Profile
 
     public string FullContact => Contact.FullContact;
     public string FullAddress => Address.FullAddress;
-
+    public EUserType Type { get; private set; }
     public string FullDetails => Detail.FullDetails;
 
     public Profile()
@@ -31,16 +32,18 @@ public partial class Profile
             string email, 
             string department, 
             string district, 
-            string residential
+            string residential,
+            EUserType type
         )
     {
         Detail = new Details(name,description,ruc);
         Contact = new Contact(phone, email);
         Address = new Address(department, district, residential);
+        Type = type;
     }
     
     //constructor con command
-    public Profile(CreateProfileCommand command)
+    public Profile(CreateProfileCommand command, EUserType type)
     {
         Detail = new Details(command.Name,command.Description,command.Ruc);
         Contact = new Contact(
@@ -52,6 +55,7 @@ public partial class Profile
             command.District,
             command.Residential
             );
+        Type = type;
     }
 
     //metodos 

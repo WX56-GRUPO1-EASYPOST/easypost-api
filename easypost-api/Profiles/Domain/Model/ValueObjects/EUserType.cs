@@ -1,4 +1,4 @@
-namespace easypost_api.IAM.Domain.Model.ValueObjects;
+namespace easypost_api.Profiles.Domain.Model.ValueObjects;
 
 public enum EUserType
 {

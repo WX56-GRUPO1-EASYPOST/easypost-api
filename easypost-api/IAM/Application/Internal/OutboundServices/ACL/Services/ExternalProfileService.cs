@@ -19,7 +19,9 @@ public class ExternalProfileService(IProfilesContextFacade profilesContextFacade
         string email, 
         string department, 
         string district, 
-        string residential)
+        string residential,
+        string type
+        )
     {
         var profileId = await profilesContextFacade.CreateProfileForUser(
             name, 
@@ -29,7 +31,8 @@ public class ExternalProfileService(IProfilesContextFacade profilesContextFacade
             email, 
             department, 
             district, 
-            residential
+            residential,
+            type
             );
         if (profileId == 0) return await Task.FromResult<int>(0);
         return profileId;

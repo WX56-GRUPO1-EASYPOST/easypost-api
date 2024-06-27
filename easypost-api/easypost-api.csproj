@@ -31,7 +31,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Profiles\Application\Internal\OutboundServices\ACL\" />
       <Folder Include="Profiles\Application\Internal\QueryServices\" />
       <Folder Include="Profiles\Interfaces\ACL\" />
       <Folder Include="Profiles\Interfaces\REST\Resources\" />

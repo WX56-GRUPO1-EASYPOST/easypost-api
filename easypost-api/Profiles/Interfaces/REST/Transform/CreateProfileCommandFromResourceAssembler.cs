@@ -15,7 +15,8 @@ public class CreateProfileCommandFromResourceAssembler
             resource.Email,
             resource.Department,
             resource.District,
-            resource.Residential
+            resource.Residential,
+            resource.Type
             );
     }
 }

@@ -10,7 +10,9 @@ public interface IExternalProfileService
         string email,
         string department,
         string district,
-        string residential);
+        string residential,
+        string type
+        );
     
     public Task<int?> FetchProfileIdByEmail(string email);
 }

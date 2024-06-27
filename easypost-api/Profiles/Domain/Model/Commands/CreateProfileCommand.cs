@@ -8,5 +8,6 @@ public record CreateProfileCommand(
     string Email, 
     string Department, 
     string District, 
-    string Residential
+    string Residential,
+    string Type
     );

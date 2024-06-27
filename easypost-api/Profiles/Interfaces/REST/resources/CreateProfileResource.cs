@@ -8,5 +8,6 @@ public record CreateProfileResource(
     string Email, 
     string Department, 
     string District, 
-    string Residential
+    string Residential,
+    string Type
     );

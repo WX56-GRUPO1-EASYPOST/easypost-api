@@ -19,4 +19,5 @@ public interface IIamContextFacade
     Task<string> FetchUsernameByUserId(int userId);
     
     Task<bool> UserExistsByUserId(int userId);
+    
 }

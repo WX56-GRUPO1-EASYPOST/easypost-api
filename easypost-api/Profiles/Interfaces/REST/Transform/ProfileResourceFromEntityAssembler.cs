@@ -11,7 +11,8 @@ public class ProfileResourceFromEntityAssembler
             entity.Id,
             entity.FullContact,
             entity.FullAddress,
-            entity.FullDetails
+            entity.FullDetails,
+            entity.Type.ToString()
             );
     }
 }

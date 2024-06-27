@@ -59,4 +59,5 @@ public class IamContextFacade(IUserCommandService userCommandService, IUserQuery
         var result = await userQueryService.Handle(getUserByIdQuery);
         return result != null;
     }
+
 }

@@ -1,5 +1,6 @@
 using easypost_api.Profiles.Domain.Model.Aggregates;
 using easypost_api.Profiles.Domain.Model.Commands;
+using easypost_api.Profiles.Domain.Model.ValueObjects;
 using easypost_api.Profiles.Domain.Repositories;
 using easypost_api.Profiles.Domain.Services;
 using easypost_api.Shared.Domain.Repositories;
@@ -16,7 +17,18 @@ public class ProfileCommandService(IProfileRepository profileRepository, IUnitOf
         {
             throw new Exception("Profile already exists");
         }
-        var profile = new Profile(command);
+        
+        var type = command.Type switch
+        {
+            "Client" => EUserType.Client,
+            "Company" => EUserType.Company,
+            _ => EUserType.None
+        };
+
+        if(type == EUserType.None)
+            throw new Exception("Invalid user type");
+        
+        var profile = new Profile(command, type);
         try
         {
             await profileRepository.AddAsync(profile);

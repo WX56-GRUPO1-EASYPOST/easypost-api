@@ -25,7 +25,8 @@ public class ProfilesContextFacade(
         string email, 
         string department, 
         string district, 
-        string residential
+        string residential,
+        string type
         ) 
     {
         var command = new CreateProfileCommand(
@@ -36,7 +37,8 @@ public class ProfilesContextFacade(
             email, 
             department, 
             district, 
-            residential
+            residential,
+            type
             );
         var profile = await profileCommandService.Handle(command);
         return profile?.Id ?? 0;
@@ -58,18 +60,13 @@ public class ProfilesContextFacade(
     public async Task<Profile?> GetProfileById(int profileId)
     {
         var query = new ExistProfileByIdQuery(profileId);
-        if (!_profileQueryService.Handle(query))
+        if (!profileQueryService.Handle(query))
         {
             return null;
         }
 
         var getProfileByIdQuery = new GetProfileByIdQuery(profileId);
-        var profile = await _profileQueryService.Handle(getProfileByIdQuery);
-        if (profile==null)
-        {
-            return null;
-        }
-
-        return profile;
+        var profile = await profileQueryService.Handle(getProfileByIdQuery);
+        return profile ?? null;
     }
 }

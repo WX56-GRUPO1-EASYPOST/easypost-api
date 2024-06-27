@@ -1,19 +1,21 @@
 using easypost_api.IAM.Interfaces.ACL;
+using easypost_api.Profiles.Application.Internal.OutboundServices;
 using easypost_api.Profiles.Domain.Model.Aggregates;
 using easypost_api.Profiles.Domain.Model.Queries;
+using easypost_api.Profiles.Domain.Model.ValueObjects;
 using easypost_api.Profiles.Domain.Repositories;
 using easypost_api.Profiles.Domain.Services;
 
 namespace easypost_api.Profiles.Application.Internal.QueryServices;
 
 public class ProfileQueryService(
-    IProfileRepository profileRepository
+    IProfileRepository profileRepository,
+    IExternalIamService externalIamService
     ) : IProfileQueryService
 {
     public async Task<Profile?> Handle(GetProfileByIdQuery query)
     {
         return await profileRepository.FindByIdAsync(query.ProfileId);
-      
     }
 
     public async Task<IEnumerable<Profile>> Handle(GetAllProfilesQuery query)
@@ -36,10 +38,11 @@ public class ProfileQueryService(
         var profiles = await this.Handle(new GetAllProfilesQuery());
         if (!profiles.Any())
         {
-            return Enumerable.Empty<Profile>();
+            return [];
         }
+
         var enterpriseProfiles = profiles
-            .Where(profile =>_userContextFacade.IsEnterprise(profile.UserId).Result == true);
+            .Where(profile => profile.Type == EUserType.Company);
         return enterpriseProfiles;
     }
 }
