@@ -79,6 +79,10 @@ public class AppDbContext : DbContext
         builder.Entity<Project>().Property(c => c.AccessCode);
         builder.Entity<Project>().Property(c => c.TotalBudget).IsRequired();
         builder.Entity<Project>().Property(c => c.PartialBudget).IsRequired();
+        builder.Entity<Project>()
+            .HasOne(p => p.Profile)
+            .WithOne()
+            .HasForeignKey<Project>(p => p.CompanyProfileId);
         
         builder.Entity<ConstructionPermit>().HasKey(c => c.Id);
         builder.Entity<ConstructionPermit>().Property(c => c.Id).IsRequired().ValueGeneratedOnAdd();

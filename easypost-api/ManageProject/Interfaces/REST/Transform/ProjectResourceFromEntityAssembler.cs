@@ -15,6 +15,7 @@ public static class ProjectResourceFromEntityAssembler
             project.TotalBudget,
             project.PartialBudget,
             LocationResourceFromEntityAssembler.ToResourceFromEntity(project.Location),
+            project.CompanyProfileId,
             project.Status.GetDisplayName()
         );
     }

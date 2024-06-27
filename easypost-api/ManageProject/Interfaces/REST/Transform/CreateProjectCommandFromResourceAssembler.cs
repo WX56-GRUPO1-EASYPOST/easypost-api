@@ -9,7 +9,8 @@ public static class CreateProjectCommandFromResourceAssembler {
             createProjectCommand.Title,
             createProjectCommand.TotalBudget,
             createProjectCommand.PartialBudget,
-            createProjectCommand.LocationId
+            createProjectCommand.LocationId,
+            createProjectCommand.CompanyProfileId
         );
     }
 }

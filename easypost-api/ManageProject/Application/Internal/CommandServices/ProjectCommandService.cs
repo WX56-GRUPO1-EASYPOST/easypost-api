@@ -24,7 +24,8 @@ public class ProjectCommandService(IProjectRepository projectRepository, ILocati
             accessCode,
             command.TotalBudget,
             command.PartialBudget,
-            command.LocationId
+            command.LocationId,
+            command.CompanyProfileId
         );
 
         await projectRepository.AddAsync(project);

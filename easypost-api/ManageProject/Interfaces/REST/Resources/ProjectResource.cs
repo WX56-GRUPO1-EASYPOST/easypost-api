@@ -7,5 +7,6 @@ public record ProjectResource(
     long TotalBudget, 
     long PartialBudget,
     LocationResource Location,
+    int CompanyProfileId,
     string Status
     );

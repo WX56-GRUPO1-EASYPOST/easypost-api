@@ -4,5 +4,6 @@ public record CreateProjectResource(
     string Title,
     long TotalBudget, 
     long PartialBudget, 
-    int LocationId
+    int LocationId,
+    int CompanyProfileId
     );

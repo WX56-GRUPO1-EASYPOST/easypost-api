@@ -4,5 +4,6 @@ public record CreateProjectCommand(
     string Title,
     long TotalBudget, 
     long PartialBudget, 
-    int LocationId
+    int LocationId,
+    int CompanyProfileId
     );
