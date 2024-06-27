@@ -1,9 +1,9 @@
 namespace easypost_api.ManageProject.Domain.Model.ValueObjects;
 
-public enum EContentStatus
+public enum EPermitsStatus
 {
-    Draft,
-    ReadyToApprove,
+    ReadyToSend,
+    Sent,
     Approved,
     Rejected
 }

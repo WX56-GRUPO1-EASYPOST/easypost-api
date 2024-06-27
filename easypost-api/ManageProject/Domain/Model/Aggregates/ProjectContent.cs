@@ -5,7 +5,7 @@ using easypost_api.Poles.Domain.Model.Aggregates;
 
 namespace easypost_api.ManageProject.Domain.Model.Aggregates;
 
-public partial class Project: IPublishable
+public partial class Project
 {
     public Project()
     {
@@ -16,10 +16,10 @@ public partial class Project: IPublishable
         ConstructionPermits = new List<ConstructionPermit>();
         Poles = new List<Pole>();
         DailyActivities = new List<DailyActivity>();
-        Status = EContentStatus.Draft;
+        Status = EProjectStatus.WaitingForPermits;
     }
     
-    public EContentStatus Status { get; private set; }
+    public EProjectStatus Status { get; private set; }
     
     public ICollection<Pole> Poles { get; private set; }
     
@@ -27,30 +27,6 @@ public partial class Project: IPublishable
     
     public ICollection<ConstructionPermit> ConstructionPermits { get; private set; }
 
-    public void SendToApproval()
-    {
-        if (HasAllAssetsWithStatus(EContentStatus.ReadyToApprove))
-            Status = EContentStatus.ReadyToApprove;
-    }
-
-    public void Approve()
-    {
-        if (HasAllAssetsWithStatus(EContentStatus.Approved))
-            Status = EContentStatus.Approved;
-    }
-
-    public void Reject()
-    {
-        Status = EContentStatus.Rejected;
-    }
-
-    public void ReturnToEdit()
-    {
-        Status = EContentStatus.Draft;
-    }
-    
-    private bool HasAllAssetsWithStatus(EContentStatus status) => ConstructionPermits.All(asset => asset.Status == status);
-    
     public void AddConstructionPermit(string title)
     {
         if (ExistsConstructionPermitByTitle(title)) return;
