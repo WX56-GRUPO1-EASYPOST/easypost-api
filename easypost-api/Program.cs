@@ -231,16 +231,20 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseDeveloperExceptionPage();
 }
-
-// Add Authorization Middleware to Pipeline
-app.UseRequestAuthorization();
-
-app.UseCors("AllowAllPolicy");
 
 app.UseHttpsRedirection();
 
+app.UseRouting();
+
+app.UseCors("AllowAllPolicy");
+// Add Authorization Middleware to Pipeline
+app.UseRequestAuthorization();
+
 app.UseAuthorization();
+
+app.UseAuthentication();
 
 app.MapControllers();
 
